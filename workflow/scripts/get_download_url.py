@@ -27,8 +27,9 @@ for f in files:
     # print(f.keys()) ####
     if f["biological_replicates"][0] != replicate_num:
         continue
+    print(f["file_format"], f["output_type"]) ####
     if (f["file_format"] == "tar") and (f["output_type"] == "fragments"):
-        path =  f["href"]
+        path = f["href"]
         break
 
 if path is None:
