@@ -30,7 +30,7 @@ for f in files:
         continue
     # print(f["file_format"], f["output_type"]) ####
     if (f["file_format"] == "tar") and (f["output_type"] == "fragments"):
-        path = f["href"]
+        path = f["cloud_metadata"]["url"]
         break
 
 if path is None:
