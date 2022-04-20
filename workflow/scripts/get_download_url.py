@@ -8,7 +8,7 @@ from encode_utils.connection import Connection
 path_out, = snakemake.output
 dcc_mode = snakemake.config["dcc_mode"]
 experiment = snakemake.params["experiment"]
-replicate_num = snakemake.params["replicate"]
+replicate_num = int(snakemake.params["replicate"])
 log_dir, = snakemake.log
 
 os.environ["DCC_API_KEY"] = snakemake.params["dcc_api_key"]
@@ -25,10 +25,10 @@ path = None
 files = data["files"]
 for f in files:
     # print(f.keys()) ####
-    print(f["biological_replicates"]) ####
+    # print(f["biological_replicates"]) ####
     if f["biological_replicates"][0] != replicate_num:
         continue
-    print(f["file_format"], f["output_type"]) ####
+    # print(f["file_format"], f["output_type"]) ####
     if (f["file_format"] == "tar") and (f["output_type"] == "fragments"):
         path = f["href"]
         break
