@@ -25,6 +25,7 @@ path = None
 files = data["files"]
 for f in files:
     # print(f.keys()) ####
+    print(f["biological_replicates"]) ####
     if f["biological_replicates"][0] != replicate_num:
         continue
     print(f["file_format"], f["output_type"]) ####
