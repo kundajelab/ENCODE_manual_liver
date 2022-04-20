@@ -63,8 +63,6 @@ build_archr_project <- function(params, input_paths, output_paths, threads, log_
         ArrowFiles = arrows, 
         outputDirectory = output_paths[["project_dir"]],
         copyArrows = FALSE,
-        geneAnnotation = gene_annotation,
-        genomeAnnotation = genome_annotation,
     )
     
     # Filter doublets
