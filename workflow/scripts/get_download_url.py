@@ -35,5 +35,7 @@ for f in files:
 if path is None:
     raise ValueError("href not found for fragments tarball")
 
+print(path) ####
+
 with open(path_out, "w") as f:
     f.write(path)
