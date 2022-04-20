@@ -21,7 +21,7 @@ with open("config/samples.tsv") as sample_file:
         rep = entries[rep_ind]
         assay = entries[assay_ind]
         if assay == "ATAC":
-            samples.append(f"{exp}-{rep}")
+            samples_atac.append(f"{exp}-{rep}")
 
 workdir: 
     config['workdir']
