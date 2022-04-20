@@ -21,7 +21,7 @@ rule archr_build:
     threads:
         max_threads
     conda:
-        "../envs/cluster.yaml"
+        "../envs/atac.yaml"
     script:
         "../scripts/build_archr_project.R"
 
@@ -43,7 +43,7 @@ rule archr_lsi:
     threads:
         max_threads
     conda:
-        "../envs/cluster.yaml"
+        "../envs/atac.yaml"
     script:
         "../scripts/archr_lsi.R"
 
@@ -66,7 +66,7 @@ rule archr_cluster:
     threads:
         max_threads
     conda:
-        "../envs/cluster.yaml"
+        "../envs/atac.yaml"
     script:
         "../scripts/archr_cluster.R"
 
