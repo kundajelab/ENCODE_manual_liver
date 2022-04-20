@@ -1,0 +1,112 @@
+import os
+import json
+from snakemake.utils import min_version
+
+min_version("6.6.1")
+
+configfile: 
+    "config/config.yaml"
+
+with open("config/samples.tsv") as sample_file:
+    h = sample_file.readline().rstrip('\n').split('\t')
+    exp_ind = h.index("Experiment")
+    asm_ind = h.index("Assembly")
+    sample_config = {}
+    samples = []
+    samples_in_assembly = {}
+    for line in sample_file:
+        if line.startswith("#"):
+            continue
+        entries = line.rstrip('\n').split('\t')
+        exp = entries[exp_ind]
+        asm = entries[asm_ind]
+        sample_config[exp] = {
+            "experiment": exp,
+            "assembly": asm
+        }
+        samples.append(exp)
+        samples_in_assembly.setdefault(asm, []).append(exp)
+    assemblies = list(samples_in_assembly.keys())
+
+
+
+workdir: 
+    config['workdir']
+
+max_threads = config["max_threads_per_rule"]
+
+def script_path(script_name):
+    return str(workflow.source_path(script_name))
+
+include:
+    "rules/cluster.smk"
+
+rule all:
+    """
+    Generate all outputs (default)
+    """
+    input: 
+        expand("results/{sample}/cluster/archr_clustered", sample=samples),
+
+
+rule query_portal:
+    """
+    Query ENCODE portal for fragments URL
+    """
+    output:
+        "results/{sample}/fetch/fragments_url.txt"
+    params:
+        experiment = lambda w: sample_config[w.sample]["experiment"],
+        replicate = lambda w: sample_config[w.sample]["replicate"],
+        dcc_api_key = os.environ["DCC_API_KEY"], 
+        dcc_secret_key = os.environ["DCC_SECRET_KEY"]
+    log:
+        directory("logs/{sample}/query")
+    conda:
+        "envs/fetch.yaml"
+    script:
+        "scripts/get_download_url.py"
+
+rule download_fragments:
+    """
+    Download fragments tarball
+    """
+    input:
+        "results/{sample}/fetch/fragments_url.txt"
+    output:
+        "results/{sample}/fetch/fragments.tar.gz"
+    params:
+        usr = os.environ["DCC_API_KEY"],
+        pwd = os.environ["DCC_SECRET_KEY"]
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "curl --no-progress-meter -L -u {params.usr}:{params.pwd} $(< {input}) > {output}"
+
+rule extract_fragments:
+    """
+    Extract fragments file from tarball
+    """
+    input:
+        "results/{sample}/fetch/fragments.tar.gz"
+    output:
+        directory("results/{sample}/fetch/fragments_extracted")
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "tar -xzf {input} --transform='s/.*\///' -C {output}"
+
+rule move_fragments:
+    """
+    Extract fragments file from tarball
+    """
+    input:
+        "results/{sample}/fetch/fragments_extracted"
+    output:
+        frag = "results/{sample}/fetch/fragments.tsv.gz",
+        frag_ind = "results/{sample}/fetch/fragments.tsv.gz.tbi"
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "cp {input}/fragments.tsv.gz {output.frag}; "
+        "cp {input}/fragments.tsv.gz.tbi {output.frag_ind};"
