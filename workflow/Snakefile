@@ -39,7 +39,7 @@ rule all:
     Generate all outputs (default)
     """
     input: 
-        expand("results/{sample}/cluster/archr_clustered", sample=samples_atac),
+        expand("results/{sample}/atac/archr_clustered", sample=samples_atac),
 
 
 rule query_portal:
