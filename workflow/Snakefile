@@ -75,7 +75,8 @@ rule download_fragments:
     conda:
         "envs/fetch.yaml"
     shell:
-        "curl --no-progress-meter -L -u {params.usr}:{params.pwd} $(< {input}) > {output}"
+        # "curl --no-progress-meter -L -u {params.usr}:{params.pwd} $(< {input}) > {output}"
+        "curl --no-progress-meter -L $(< {input}) > {output}"
 
 rule extract_fragments:
     """
