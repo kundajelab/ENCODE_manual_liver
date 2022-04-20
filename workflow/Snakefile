@@ -10,25 +10,16 @@ configfile:
 with open("config/samples.tsv") as sample_file:
     h = sample_file.readline().rstrip('\n').split('\t')
     exp_ind = h.index("Experiment")
-    asm_ind = h.index("Assembly")
-    sample_config = {}
-    samples = []
-    samples_in_assembly = {}
+    assay_ind = h.index("Assay")
+    samples_atac = []
     for line in sample_file:
         if line.startswith("#"):
             continue
         entries = line.rstrip('\n').split('\t')
         exp = entries[exp_ind]
-        asm = entries[asm_ind]
-        sample_config[exp] = {
-            "experiment": exp,
-            "assembly": asm
-        }
-        samples.append(exp)
-        samples_in_assembly.setdefault(asm, []).append(exp)
-    assemblies = list(samples_in_assembly.keys())
-
-
+        assay = entries[assay_ind]
+        if assay == "ATAC":
+            samples.append(exp)
 
 workdir: 
     config['workdir']
@@ -39,7 +30,7 @@ def script_path(script_name):
     return str(workflow.source_path(script_name))
 
 include:
-    "rules/cluster.smk"
+    "rules/atac.smk"
 
 rule all:
     """
