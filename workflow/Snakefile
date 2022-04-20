@@ -51,6 +51,7 @@ rule query_portal:
     params:
         experiment = lambda w: w.sample.split("-")[0],
         replicate = lambda w: w.sample.split("-")[1],
+        dcc_mode = config["dcc_mode"]
         dcc_api_key = os.environ["DCC_API_KEY"], 
         dcc_secret_key = os.environ["DCC_SECRET_KEY"]
     log:
