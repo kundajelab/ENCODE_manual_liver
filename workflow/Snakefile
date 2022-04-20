@@ -10,6 +10,7 @@ configfile:
 with open("config/samples.tsv") as sample_file:
     h = sample_file.readline().rstrip('\n').split('\t')
     exp_ind = h.index("Experiment")
+    rep_ind = h.index("Replicate")
     assay_ind = h.index("Assay")
     samples_atac = []
     for line in sample_file:
@@ -17,9 +18,10 @@ with open("config/samples.tsv") as sample_file:
             continue
         entries = line.rstrip('\n').split('\t')
         exp = entries[exp_ind]
+        rep = entries[rep_ind]
         assay = entries[assay_ind]
         if assay == "ATAC":
-            samples.append(exp)
+            samples.append(f"{exp}-{rep}")
 
 workdir: 
     config['workdir']
@@ -37,7 +39,7 @@ rule all:
     Generate all outputs (default)
     """
     input: 
-        expand("results/{sample}/cluster/archr_clustered", sample=samples),
+        expand("results/{sample}/cluster/archr_clustered", sample=samples_atac),
 
 
 rule query_portal:
@@ -47,8 +49,8 @@ rule query_portal:
     output:
         "results/{sample}/fetch/fragments_url.txt"
     params:
-        experiment = lambda w: sample_config[w.sample]["experiment"],
-        replicate = lambda w: sample_config[w.sample]["replicate"],
+        experiment = lambda w: w.sample.split("-")[0],
+        replicate = lambda w: w.sample.split("-")[1],
         dcc_api_key = os.environ["DCC_API_KEY"], 
         dcc_secret_key = os.environ["DCC_SECRET_KEY"]
     log:
