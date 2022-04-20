@@ -25,7 +25,7 @@ path = None
 files = data["files"]
 for f in files:
     print(f.keys()) ####
-    if f["replicate"]["biological_replicate_number"] != replicate_num:
+    if f["biological_replicates"][0] != replicate_num:
         continue
     if (f["file_format"] == "tar") and (f["output_type"] == "fragments"):
         path =  f["href"]
