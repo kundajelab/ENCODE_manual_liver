@@ -37,8 +37,6 @@ build_archr_project <- function(params, input_paths, output_paths, threads, log_
         inputFiles = c(frag_path),
         sampleNames = c(arrow_sample_name),
         outputNames = c(arrow_output_name),
-        geneAnnotation = gene_annotation,
-        genomeAnnotation = genome_annotation,
         offsetPlus = 0,
         offsetMinus = 0,
         addTileMat = TRUE,
