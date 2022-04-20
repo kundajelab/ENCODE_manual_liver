@@ -24,7 +24,7 @@ path = None
 
 files = data["files"]
 for f in files:
-    print(f.keys()) ####
+    # print(f.keys()) ####
     if f["biological_replicates"][0] != replicate_num:
         continue
     if (f["file_format"] == "tar") and (f["output_type"] == "fragments"):
