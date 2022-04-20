@@ -89,6 +89,7 @@ rule extract_fragments:
     conda:
         "envs/fetch.yaml"
     shell:
+        "mkdir -p {output}; "
         "tar -xzf {input} --transform='s/.*\///' -C {output}"
 
 rule move_fragments:
