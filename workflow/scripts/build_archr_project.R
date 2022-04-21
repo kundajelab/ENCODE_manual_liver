@@ -20,6 +20,7 @@ Sys.setenv("RHDF5_USE_FILE_LOCKING" = "FALSE")
 build_archr_project <- function(params, input_paths, output_paths, threads, log_paths) {
     arrow_sample_name <- params[["sample_name"]]
     seed <- params[["seed"]]
+    min_frags <- params[["min_frags"]]
 
     set.seed(seed)
     
@@ -39,6 +40,7 @@ build_archr_project <- function(params, input_paths, output_paths, threads, log_
         outputNames = c(arrow_output_name),
         offsetPlus = 0,
         offsetMinus = 0,
+        minFrags = min_frags,
         addTileMat = TRUE,
         addGeneScoreMat = TRUE,
         force = TRUE,

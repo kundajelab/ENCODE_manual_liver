@@ -12,7 +12,8 @@ rule archr_build:
         arrow_dir = directory("results/{sample}/atac/archr_arrows")
     params:
         sample_name = lambda w: w.sample,
-        seed = config["archr_seed"]
+        seed = config["archr_seed"],
+        min_frags = config["archr_min_frags"]
     log:
         console = "logs/{sample}/atac/archr_build/console.log",
         arrow_create = "logs/{sample}/atac/archr_build/arrow_create.log",
