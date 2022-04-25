@@ -5,7 +5,7 @@ rule seurat_build:
     input:
         mat = "results/{sample}/fetch/mat.mtx",
         features = "results/{sample}/fetch/features.tsv",
-        cells =  "results/{sample}/fetch/barcodes.tsv
+        cells =  "results/{sample}/fetch/barcodes.tsv"
     output:
         project_out = "results/{sample}/rna/seurat_init/proj.rds",
         qc_violin = "results/{sample}/rna/seurat_init/qc_violin.pdf",
