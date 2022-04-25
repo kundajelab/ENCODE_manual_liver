@@ -36,6 +36,8 @@ def script_path(script_name):
 
 include:
     "rules/atac.smk"
+include:
+    "rules/rna.smk"
 
 rule all:
     """
