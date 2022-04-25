@@ -3,9 +3,9 @@ rule seurat_build:
     Build Seurat project
     """
     input:
-        mat = "results/{sample}/fetch/mat.mtx.gz",
-        features = "results/{sample}/fetch/features.tsv.gz",
-        cells =  "results/{sample}/fetch/barcodes.tsv.gz"
+        mat = "results/{sample}/fetch/mat.mtx",
+        features = "results/{sample}/fetch/features.tsv",
+        cells =  "results/{sample}/fetch/barcodes.tsv
     output:
         project_out = "results/{sample}/rna/seurat_init/proj.rds",
         qc_violin = "results/{sample}/rna/seurat_init/qc_violin.pdf",
