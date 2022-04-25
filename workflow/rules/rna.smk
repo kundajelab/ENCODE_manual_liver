@@ -8,8 +8,8 @@ rule seurat_build:
         cells =  "results/{sample}/fetch/barcodes.tsv.gz"
     output:
         project_out = "results/{sample}/rna/seurat_init/proj.rds",
-        qc_scatter = "results/{sample}/rna/seurat_init/qc_violin.pdf",
-        qc_scatter = "results/{sample}/rna/seurat_init/qc_violin.pdf",
+        qc_violin = "results/{sample}/rna/seurat_init/qc_violin.pdf",
+        qc_scatter = "results/{sample}/rna/seurat_init/qc_scatter.pdf",
         var_features = "results/{sample}/rna/seurat_init/var_features.pdf",
     params:
         sample_name = lambda w: w.sample,
