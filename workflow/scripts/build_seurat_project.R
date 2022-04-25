@@ -14,6 +14,8 @@ input_paths = snakemake@input
 output_paths = snakemake@output
 log_paths = snakemake@log
 
+set.seed(params[["seed"]])
+
 # Load the proj dataset
 expression_matrix <- ReadMtx(
   mtx = input_paths[["mat"]], 

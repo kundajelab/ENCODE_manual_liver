@@ -3,7 +3,7 @@ rule seurat_build:
     Build Seurat project
     """
     input:
-        mat = "results/{sample}/fetch/mat.mtx",
+        mat = "results/{sample}/fetch/matrix.mtx",
         features = "results/{sample}/fetch/features.tsv",
         cells =  "results/{sample}/fetch/barcodes.tsv"
     output:
