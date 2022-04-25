@@ -8,3 +8,5 @@ dcc_mode: prod
 
 archr_seed: 8757647
 archr_min_frags: 3000
+
+seurat_seed: 2398756

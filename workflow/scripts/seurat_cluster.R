@@ -14,6 +14,7 @@ input_paths = snakemake@input
 output_paths = snakemake@output
 log_paths = snakemake@log
 
+set.seed(params[["seed"]])
 
 proj <- readRDS(file = input_paths[["project_in"]])
 
