@@ -13,6 +13,7 @@ with open("config/samples.tsv") as sample_file:
     rep_ind = h.index("Replicate")
     assay_ind = h.index("Assay")
     samples_atac = []
+    samples_rna = []
     for line in sample_file:
         if line.startswith("#"):
             continue
@@ -22,6 +23,8 @@ with open("config/samples.tsv") as sample_file:
         assay = entries[assay_ind]
         if assay == "ATAC":
             samples_atac.append(f"{exp}-{rep}")
+        elif assay == "RNA":
+            samples_rna.append(f"{exp}-{rep}")
 
 workdir: 
     config['workdir']
@@ -40,9 +43,9 @@ rule all:
     """
     input: 
         expand("results/{sample}/atac/archr_clustered", sample=samples_atac),
+        expand("results/{sample}/rna/seurat_clustered/proj.rds", sample=samples_rna)
 
-
-rule query_portal:
+rule query_fragments:
     """
     Query ENCODE portal for fragments URL
     """
@@ -55,7 +58,7 @@ rule query_portal:
         dcc_api_key = os.environ["DCC_API_KEY"], 
         dcc_secret_key = os.environ["DCC_SECRET_KEY"]
     log:
-        directory("logs/{sample}/query")
+        directory("logs/{sample}/query_fragments")
     conda:
         "envs/fetch.yaml"
     script:
@@ -94,7 +97,7 @@ rule extract_fragments:
 
 rule move_fragments:
     """
-    Extract fragments file from tarball
+    Move fragments data to final location
     """
     input:
         "results/{sample}/fetch/fragments_extracted"
@@ -106,3 +109,70 @@ rule move_fragments:
     shell:
         "cp {input}/fragments.tsv.gz {output.frag}; "
         "cp {input}/fragments.tsv.gz.tbi {output.frag_ind};"
+
+rule query_expression:
+    """
+    Query ENCODE portal for gene expression matrix URL
+    """
+    output:
+        "results/{sample}/fetch/expression_url.txt"
+    params:
+        experiment = lambda w: w.sample.split("-")[0],
+        replicate = lambda w: w.sample.split("-")[1],
+        dcc_mode = config["dcc_mode"],
+        dcc_api_key = os.environ["DCC_API_KEY"], 
+        dcc_secret_key = os.environ["DCC_SECRET_KEY"]
+    log:
+        directory("logs/{sample}/query_fragments")
+    conda:
+        "envs/fetch.yaml"
+    script:
+        "scripts/get_expression_url.py"
+
+rule download_expression:
+    """
+    Download expression tarball
+    """
+    input:
+        "results/{sample}/fetch/expression_url.txt"
+    output:
+        "results/{sample}/fetch/expression.tar.gz"
+    params:
+        usr = os.environ["DCC_API_KEY"],
+        pwd = os.environ["DCC_SECRET_KEY"]
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        # "curl --no-progress-meter -L -u {params.usr}:{params.pwd} $(< {input}) > {output}"
+        "curl --no-progress-meter -L $(< {input}) > {output}"
+
+rule extract_expression:
+    """
+    Extract expression data from tarball
+    """
+    input:
+        "results/{sample}/fetch/expression.tar.gz"
+    output:
+        directory("results/{sample}/fetch/expression_extracted")
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "mkdir -p {output}; "
+        "tar -xzf {input} --transform='s/.*\///' -C {output}"
+
+rule move_expression:
+    """
+    Move expression data files to final location
+    """
+    input:
+        "results/{sample}/fetch/expression_extracted"
+    output:
+        matrix = "results/{sample}/fetch/matrix.mtx",
+        features = "results/{sample}/fetch/features.tsv",
+        barcodes = "results/{sample}/fetch/barcodes.tsv",
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "cp {input}/matrix.mtx {output.matrix}; "
+        "cp {input}/features.tsv {output.features}; "
+        "cp {input}/barcodes.tsv {output.barcodes};"

@@ -1,0 +1,9 @@
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - conda-forge::r-base=4.1.1
+  - conda-forge::r-seurat=4.0.3
+  - conda-forge::r-ggplot2=3.3.5
+  - conda-forge::r-dplyr=1.0.8
