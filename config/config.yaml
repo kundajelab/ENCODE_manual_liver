@@ -10,3 +10,6 @@ archr_seed: 8757647
 archr_min_frags: 3000
 
 seurat_seed: 2398756
+
+rna_ref_counts: https://www.ebi.ac.uk/gxa/sc/experiment/E-MTAB-10553/download/zip?fileType=quantification-raw&accessKey=
+rna_ref_metadata: https://www.ebi.ac.uk/gxa/sc/experiment/E-MTAB-10553/download?fileType=experiment-design&accessKey=

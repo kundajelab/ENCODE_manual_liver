@@ -1,4 +1,26 @@
-rule seurat_build:
+rule seurat_build_reference:
+    """
+    Build Seurat reference dataset
+    """
+    input:
+        mat = "reference/fetch/matrix.mtx",
+        features = "reference/fetch/features.tsv",
+        cells =  "reference/fetch/barcodes.tsv"
+    output:
+        project_out = "reference/seurat_build_reference/proj.rds",
+        qc_violin = "reference/seurat_build_reference/qc_violin.pdf",
+        qc_scatter = "reference/seurat_build_reference/qc_scatter.pdf",
+        var_features = "reference/seurat_build_reference/var_features.pdf",
+    params:
+        seed = config["seurat_seed"]
+    log:
+        console = "logs/reference/seurat_build_reference/seurat_build_rna/console.log"
+    conda:
+        "../envs/seurat.yaml"
+    script:
+        "../scripts/build_seurat_rna.R"
+
+rule seurat_build_rna:
     """
     Build Seurat project
     """
@@ -7,35 +29,54 @@ rule seurat_build:
         features = "results/{sample}/fetch/features.tsv",
         cells =  "results/{sample}/fetch/barcodes.tsv"
     output:
-        project_out = "results/{sample}/rna/seurat_init/proj.rds",
-        qc_violin = "results/{sample}/rna/seurat_init/qc_violin.pdf",
-        qc_scatter = "results/{sample}/rna/seurat_init/qc_scatter.pdf",
-        var_features = "results/{sample}/rna/seurat_init/var_features.pdf",
+        project_out = "results/{sample}/rna/seurat_build_rna/proj.rds",
+        qc_violin = "results/{sample}/rna/seurat_build_rna/qc_violin.pdf",
+        qc_scatter = "results/{sample}/rna/seurat_build_rna/qc_scatter.pdf",
+        var_features = "results/{sample}/rna/seurat_build_rna/var_features.pdf",
     params:
         sample_name = lambda w: w.sample,
         seed = config["seurat_seed"]
     log:
-        console = "logs/{sample}/rna/seurat_init/console.log"
+        console = "logs/{sample}/rna/seurat_build_rna/console.log"
     conda:
-        "../envs/rna.yaml"
+        "../envs/seurat.yaml"
     script:
-        "../scripts/build_seurat_project.R"
+        "../scripts/build_seurat_rna.R"
 
-rule seurat_cluster:
+rule seurat_merge_rna:
+    """
+    Merge RNA samples
+    """
+    input:
+        projects_in = expand("results/{sample}/rna/seurat_build_rna/proj.rds", sample=samples_rna)
+    output:
+        project_out = "results_merged/rna/seurat_merge_rna/proj.rds",
+    params:
+        seed = config["seurat_seed"],
+    log:
+        console = "logs/merged/rna/seurat_merge_rna/console.log"
+    conda:
+        "../envs/seurat.yaml"
+    script:
+        "../scripts/seurat_merge_rna.R"
+
+rule seurat_cluster_rna:
     """
     Seurat RNA clustering
     """
     input:
-        project_in = "results/{sample}/rna/seurat_init/proj.rds"
+        project_in = "results_merged/rna/seurat_merge_rna/proj.rds",
+        project_ref = "reference/seurat_build_reference/proj.rds"
     output:
-        project_out = "results/{sample}/rna/seurat_clustered/proj.rds",
-        umap = "results/{sample}/rna/seurat_clustered/umap.pdf"
+        project_out = "results_merged/rna/seurat_cluster_rna/proj.rds",
+        umap = "results_merged/rna/seurat_cluster_rna/umap.pdf",
+        umap_ref = "results_merged/rna/seurat_cluster_rna/umap_ref.pdf"
     params:
         sample_name = lambda w: w.sample,
         seed = config["seurat_seed"],
     log:
-        console = "logs/{sample}/rna/seurat_clustered/console.log"
+        console = "logs/merged/rna/seurat_cluster_rna/console.log"
     conda:
         "../envs/rna.yaml"
     script:
-        "../scripts/seurat_cluster.R"
+        "../scripts/seurat_cluster_rna.R"

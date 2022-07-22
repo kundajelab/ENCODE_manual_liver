@@ -24,6 +24,11 @@ expression_matrix <- ReadMtx(
 )
 # Initialize the Seurat object with the raw (non-normalized data).
 proj <- CreateSeuratObject(counts = expression_matrix, project = params[["sample_name"]], min.cells = 3, min.features = 200)
+proj <- AddMetaData(
+  object = proj,
+  metadata = rep(params[["sample_name"]], length(Cells(proj))),
+  col.name = 'dataset'
+)
 proj[["percent.mt"]] <- PercentageFeatureSet(proj, pattern = "^MT-")
 
 plt <- VlnPlot(proj, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)

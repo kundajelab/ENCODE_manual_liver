@@ -26,6 +26,19 @@ with open("config/samples.tsv") as sample_file:
         elif assay == "RNA":
             samples_rna.append(f"{exp}-{rep}")
 
+with open("config/samples_rna.tsv") as sample_file:
+    h = sample_file.readline().rstrip('\n').split('\t')
+    exp_ind = h.index("Experiment")
+    rep_ind = h.index("Replicate")
+    samples_rna = []
+    for line in sample_file:
+        if line.startswith("#"):
+            continue
+        entries = line.rstrip('\n').split('\t')
+        exp = entries[exp_ind]
+        rep = entries[rep_ind]
+        samples_rna.append(f"{exp}-{rep}")
+
 workdir: 
     config['workdir']
 
@@ -44,8 +57,9 @@ rule all:
     Generate all outputs (default)
     """
     input: 
-        expand("results/{sample}/atac/archr_clustered", sample=samples_atac),
-        expand("results/{sample}/rna/seurat_clustered/proj.rds", sample=samples_rna)
+        # expand("results/{sample}/atac/archr_clustered", sample=samples_atac),
+        # expand("results/{sample}/rna/seurat_clustered/proj.rds", sample=samples_rna)
+        "results_merged/rna/seurat_cluster_rna/proj.rds"
 
 rule query_fragments:
     """
@@ -178,3 +192,60 @@ rule move_expression:
         "cp {input}/matrix.mtx {output.matrix}; "
         "cp {input}/features.tsv {output.features}; "
         "cp {input}/barcodes.tsv {output.barcodes};"
+
+rule download_rna_ref_counts:
+    """
+    Download reference expression tarball
+    """
+    output:
+        "reference/fetch/expression.tar.gz"
+    params:
+        url = config["rna_ref_counts"]
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "curl --no-progress-meter -L {params.url} > {output}"
+
+rule extract_rna_ref_counts:
+    """
+    Extract reference expression data from tarball
+    """
+    input:
+        "reference/fetch/expression.tar.gz"
+    output:
+        directory("reference/fetch/expression_extracted")
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "mkdir -p {output}; "
+        "tar -xzf {input} --transform='s/.*\///' -C {output}"
+
+rule move_rna_ref_counts:
+    """
+    Move reference expression data files to final location
+    """
+    input:
+        "results/{sample}/fetch/expression_extracted"
+    output:
+        matrix = "results/{sample}/fetch/matrix.mtx",
+        features = "results/{sample}/fetch/features.tsv",
+        barcodes = "results/{sample}/fetch/barcodes.tsv",
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "cp {input}/matrix.mtx {output.matrix}; "
+        "cp {input}/features.tsv {output.features}; "
+        "cp {input}/barcodes.tsv {output.barcodes};"
+
+rule download_rna_ref_metadata:
+    """
+    Download reference metadata
+    """
+    output:
+        "reference/fetch/metadata.tsv"
+    params:
+        url = config["rna_ref_metadata"]
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "curl --no-progress-meter -L {params.url} > {output}"
