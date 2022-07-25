@@ -22,7 +22,9 @@ expression_matrix <- ReadMtx(
   features = input_paths[["features"]],
   cells = input_paths[["cells"]]
 )
+print(expression_matrix) ####
 metadata <- read.table(file = input_paths[["metadata"]], sep = '\t', header = TRUE)
+print(head(metadata)) ####
 
 # Initialize the Seurat object with the raw (non-normalized data).
 proj <- CreateSeuratObject(
