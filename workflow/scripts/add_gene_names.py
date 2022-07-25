@@ -2,8 +2,9 @@ import mygene
 
 def query_genes(gene_list):
     mg = mygene.MyGeneInfo()
-    names = mg.querymany(gene_list , scopes='ensembl.gene', fields='symbol', species='human')
-    print(names) ####
+    query = mg.querymany(gene_list , scopes='ensembl.gene', fields='symbol', species='human')
+    mapping = {i["query"]: i["symbol"] for i in query if "symbol" in i}
+    names = [mapping.get(g, g) for g in gene_list]
     return names
 
 def main(in_path, out_path):
