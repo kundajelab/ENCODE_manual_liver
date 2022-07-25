@@ -219,9 +219,9 @@ rule extract_rna_ref_counts:
     conda:
         "envs/fetch.yaml"
     shell:
-        "unzip {input} E-MTAB-10553.aggregated_filtered_counts.mtx > {output.matrix}; "
-        "unzip {input} E-MTAB-10553.aggregated_filtered_counts.mtx_rows > {output.features}; "
-        "unzip {input} E-MTAB-10553.aggregated_filtered_counts.mtx_cols > {output.barcodes} "
+        "unzip -p {input} E-MTAB-10553.aggregated_filtered_counts.mtx > {output.matrix}; "
+        "unzip -p {input} E-MTAB-10553.aggregated_filtered_counts.mtx_rows > {output.features}; "
+        "unzip -p {input} E-MTAB-10553.aggregated_filtered_counts.mtx_cols > {output.barcodes} "
 
 rule rna_ref_gene_names:
     """
