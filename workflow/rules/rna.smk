@@ -19,7 +19,7 @@ rule seurat_build_reference:
     conda:
         "../envs/seurat.yaml"
     script:
-        "../scripts/build_seurat_rna.R"
+        "../scripts/build_seurat_reference.R"
 
 rule seurat_build_rna:
     """

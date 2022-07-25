@@ -22,7 +22,6 @@ expression_matrix <- ReadMtx(
   features = input_paths[["features"]],
   cells = input_paths[["cells"]]
 )
-print("wheioghwoehgioe") ####
 print(expression_matrix) ####
 metadata <- read.table(file = input_paths[["metadata"]], sep = '\t', header = TRUE)
 print(head(metadata)) ####
