@@ -29,12 +29,11 @@ proj <- MapQuery(
   anchorset = anchors,
   query = proj,
   reference = ref,
-  refdata = list(
-    cell_type = "Factor.Value.cell.type."
-  ),
+  refdata = "Factor.Value.cell.type.",
   reference.reduction = "pca"
   # reduction.model = "umap"
 )
+proj$cell_type <- proj[["Factor.Value.cell.type."]]
 
 # plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
 # ggsave(output_paths[["umap_ref"]], plt, device = "pdf")
