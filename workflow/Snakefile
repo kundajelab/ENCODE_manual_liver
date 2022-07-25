@@ -204,7 +204,7 @@ rule download_rna_ref_counts:
     conda:
         "envs/fetch.yaml"
     shell:
-        "curl --no-progress-meter -L {params.url} > {output}"
+        "curl --no-progress-meter -L '{params.url}' > {output}"
 
 rule extract_rna_ref_counts:
     """
