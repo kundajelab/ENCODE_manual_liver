@@ -198,7 +198,7 @@ rule download_rna_ref_counts:
     Download reference expression tarball
     """
     output:
-        "reference/fetch/expression.tar.gz"
+        "reference/fetch/expression.zip"
     params:
         url = config["rna_ref_counts"]
     conda:
@@ -211,31 +211,30 @@ rule extract_rna_ref_counts:
     Extract reference expression data from tarball
     """
     input:
-        "reference/fetch/expression.tar.gz"
-    output:
-        directory("reference/fetch/expression_extracted")
-    conda:
-        "envs/fetch.yaml"
-    shell:
-        "mkdir -p {output}; "
-        "tar -xzf {input} --transform='s/.*\///' -C {output}"
-
-rule move_rna_ref_counts:
-    """
-    Move reference expression data files to final location
-    """
-    input:
-        "reference/fetch/expression_extracted"
+        "reference/fetch/expression.zip"
     output:
         matrix = "reference/fetch/matrix.mtx",
-        features = "reference/fetch/features.tsv",
+        features = "reference/fetch/features_raw.tsv",
         barcodes = "reference/fetch/barcodes.tsv",
     conda:
         "envs/fetch.yaml"
     shell:
-        "cp {input}/matrix.mtx {output.matrix}; "
-        "cp {input}/features.tsv {output.features}; "
-        "cp {input}/barcodes.tsv {output.barcodes};"
+        "unzip {input} E-MTAB-10553.aggregated_filtered_counts.mtx > {output.matrix}; "
+        "unzip {input} E-MTAB-10553.aggregated_filtered_counts.mtx_rows > {output.features}; "
+        "unzip {input} E-MTAB-10553.aggregated_filtered_counts.mtx_cols > {output.barcodes} "
+
+rule rna_ref_gene_names:
+    """
+    Fill in gene names for RNA reference
+    """
+    input:
+        "reference/fetch/features_raw.tsv"
+    output:
+        "reference/fetch/features.tsv"
+    conda:
+        "envs/fetch.yaml"
+    script:
+        "scripts/add_gene_names.py"
 
 rule download_rna_ref_metadata:
     """
