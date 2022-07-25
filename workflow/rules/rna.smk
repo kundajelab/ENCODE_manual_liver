@@ -77,6 +77,6 @@ rule seurat_cluster_rna:
     log:
         console = "logs/merged/rna/seurat_cluster_rna/console.log"
     conda:
-        "../envs/rna.yaml"
+        "../envs/seurat.yaml"
     script:
         "../scripts/seurat_cluster_rna.R"
