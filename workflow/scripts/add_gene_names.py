@@ -2,7 +2,8 @@ import mygene
 
 def query_genes(gene_list):
     mg = mygene.MyGeneInfo()
-    names = mg.querymany(gene_list , scopes='ensembl.gene', fields='symbol', species='human')
+    names = mg.querymany(gene_list , scopes='ensembl.gene', fields='symbol', species='human', returnall=True)
+    print(names) ####
     return names
 
 def main(in_path, out_path):
