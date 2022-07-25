@@ -24,6 +24,7 @@ expression_matrix <- ReadMtx(
 )
 # print(expression_matrix) ####
 metadata <- read.table(file = input_paths[["metadata"]], sep = '\t', header = TRUE)
+rownames(metadata) <- metadata$Assay
 print(head(metadata)) ####
 
 # Initialize the Seurat object with the raw (non-normalized data).
