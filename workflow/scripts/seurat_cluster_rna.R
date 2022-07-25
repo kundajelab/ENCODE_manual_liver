@@ -32,12 +32,12 @@ proj <- MapQuery(
   refdata = list(
     cell_type = "Factor.Value.cell.type."
   ),
-  reference.reduction = "pca",
-  reduction.model = "umap"
+  reference.reduction = "pca"
+  # reduction.model = "umap"
 )
 
-plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
-ggsave(output_paths[["umap_ref"]], plt, device = "pdf")
+# plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
+# ggsave(output_paths[["umap_ref"]], plt, device = "pdf")
 
 proj <- RunPCA(proj, features = VariableFeatures(object = proj))
 
