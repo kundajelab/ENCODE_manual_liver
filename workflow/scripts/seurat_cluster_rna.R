@@ -27,8 +27,8 @@ anchors <- FindTransferAnchors(
 )
 proj <- MapQuery(
   anchorset = anchors,
-  query = pbmc3k,
-  reference = reference,
+  query = proj,
+  reference = ref,
   refdata = list(
     cell_type = "Factor.Value.cell.type.",
   ),
