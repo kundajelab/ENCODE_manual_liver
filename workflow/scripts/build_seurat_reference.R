@@ -22,7 +22,7 @@ expression_matrix <- ReadMtx(
   features = input_paths[["features"]],
   cells = input_paths[["cells"]]
 )
-print(expression_matrix) ####
+# print(expression_matrix) ####
 metadata <- read.table(file = input_paths[["metadata"]], sep = '\t', header = TRUE)
 print(head(metadata)) ####
 
@@ -68,7 +68,7 @@ proj <- FindNeighbors(proj, dims = 1:10)
 
 proj <- RunUMAP(proj, dims = 1:10)
 
-plt <- DimPlot(proj, reduction = "umap", group.by = "Factor Value[cell type]")
+plt <- DimPlot(proj, reduction = "umap", group.by = "Factor.Value.cell.type.")
 ggsave(output_paths[["umap"]], plt, device = "pdf")
 
 saveRDS(proj, file = output_paths[["project_out"]])
