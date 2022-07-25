@@ -22,7 +22,8 @@ ref <- readRDS(file = input_paths[["project_ref"]])
 anchors <- FindTransferAnchors(
   reference = ref,
   query = proj,
-  dims = 1:50
+  dims = 1:30, 
+  reference.reduction = "pca"
 )
 proj <- MapQuery(
   anchorset = anchors,
