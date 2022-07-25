@@ -35,7 +35,7 @@ proj <- CreateSeuratObject(
     meta.data = metadata
 )
 proj[["percent.mt"]] <- PercentageFeatureSet(proj, pattern = "^MT-")
-print(proj@meta.data) ####
+print(head(proj@meta.data)) ####
 
 plt <- VlnPlot(proj, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 ggsave(output_paths[["qc_violin"]], plt, device = "pdf")
