@@ -29,7 +29,7 @@ print(head(metadata)) ####
 # Initialize the Seurat object with the raw (non-normalized data).
 proj <- CreateSeuratObject(
     counts = expression_matrix, 
-    project = params[["sample_name"]], 
+    project = "reference", 
     min.cells = 3, 
     min.features = 200, 
     meta.data = metadata
