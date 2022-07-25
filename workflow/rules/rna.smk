@@ -5,7 +5,8 @@ rule seurat_build_reference:
     input:
         mat = "reference/fetch/matrix.mtx",
         features = "reference/fetch/features.tsv",
-        cells =  "reference/fetch/barcodes.tsv"
+        cells = "reference/fetch/barcodes.tsv",
+        metadata = "reference/fetch/metadata.tsv"
     output:
         project_out = "reference/seurat_build_reference/proj.rds",
         qc_violin = "reference/seurat_build_reference/qc_violin.pdf",
