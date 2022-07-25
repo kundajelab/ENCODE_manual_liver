@@ -30,7 +30,7 @@ proj <- MapQuery(
   query = proj,
   reference = ref,
   refdata = list(
-    cell_type = "Factor.Value.cell.type.",
+    cell_type = "Factor.Value.cell.type."
   ),
   reference.reduction = "pca",
   reduction.model = "umap"
