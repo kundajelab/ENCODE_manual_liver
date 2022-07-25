@@ -73,7 +73,6 @@ rule seurat_cluster_rna:
         umap = "results_merged/rna/seurat_cluster_rna/umap.pdf",
         umap_ref = "results_merged/rna/seurat_cluster_rna/umap_ref.pdf"
     params:
-        sample_name = lambda w: w.sample,
         seed = config["seurat_seed"],
     log:
         console = "logs/merged/rna/seurat_cluster_rna/console.log"
