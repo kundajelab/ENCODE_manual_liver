@@ -248,4 +248,4 @@ rule download_rna_ref_metadata:
     conda:
         "envs/fetch.yaml"
     shell:
-        "curl --no-progress-meter -L {params.url} > {output}"
+        "curl --no-progress-meter -L '{params.url}' > {output}"
