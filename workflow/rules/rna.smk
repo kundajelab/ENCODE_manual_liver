@@ -11,7 +11,6 @@ rule seurat_build_reference:
         project_out = "reference/seurat_build_reference/proj.rds",
         qc_violin = "reference/seurat_build_reference/qc_violin.pdf",
         qc_scatter = "reference/seurat_build_reference/qc_scatter.pdf",
-        var_features = "reference/seurat_build_reference/var_features.pdf",
         umap =  "reference/seurat_build_reference/umap.pdf"
     params:
         seed = config["seurat_seed"]
