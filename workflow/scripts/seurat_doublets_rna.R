@@ -56,9 +56,10 @@ doublets_col <- grep("DF.classifications", names(proj@meta.data), value = TRUE)
 proj$doublet_classification <- proj[[doublets_col]]
 proj_filtered <- subset(proj, subset = doublet_classification == "Singlet")
 
+print(proj)
+print(proj_filtered)
 saveRDS(proj, file = output_paths[["project_out_all"]])
 saveRDS(proj_filtered, file = output_paths[["project_out_filtered"]])
-
 
 sink(type = "message")
 sink()
