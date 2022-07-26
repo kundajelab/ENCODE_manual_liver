@@ -33,8 +33,8 @@ proj <- MapQuery(
   reference.reduction = "pca"
   # reduction.model = "umap"
 )
-print(proj) ####
-print(ref) ####
+print(head(proj@meta.data)) ####
+print(head(ref@meta.data)) ####
 proj$cell_type <- proj[["Factor.Value.cell.type."]]
 
 # plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
