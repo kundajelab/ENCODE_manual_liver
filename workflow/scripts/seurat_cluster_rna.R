@@ -35,7 +35,7 @@ proj <- MapQuery(
 )
 print(head(proj@meta.data)) ####
 print(head(ref@meta.data)) ####
-proj$cell_type <- proj[["Factor.Value.cell.type."]]
+proj$cell_type <- proj$predicted.id
 
 # plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
 # ggsave(output_paths[["umap_ref"]], plt, device = "pdf")
