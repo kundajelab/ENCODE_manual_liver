@@ -57,7 +57,7 @@ rule seurat_doublets_rna:
     params:
         seed = config["seurat_seed"]
     log:
-        console = "logs/{sample}/rna/seurat_build_rna/console.log"
+        console = "logs/{sample}/rna/seurat_doublets_rna/console.log"
     threads:
         config["max_threads_per_rule"]
     conda:
