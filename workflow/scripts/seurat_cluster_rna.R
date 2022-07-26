@@ -29,7 +29,7 @@ proj <- MapQuery(
   anchorset = anchors,
   query = proj,
   reference = ref,
-  refdata = "Factor.Value.cell.type.",
+  refdata = "Factor.Value.inferred.cell.type...authors.labels.",
   reference.reduction = "pca"
   # reduction.model = "umap"
 )

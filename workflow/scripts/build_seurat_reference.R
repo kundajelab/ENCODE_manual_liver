@@ -70,7 +70,7 @@ proj <- FindNeighbors(proj, dims = 1:30)
 
 proj <- RunUMAP(proj, dims = 1:30, return.model = TRUE)
 
-plt <- DimPlot(proj, reduction = "umap", group.by = "Factor.Value.cell.type.")
+plt <- DimPlot(proj, reduction = "umap", group.by = "Factor.Value.inferred.cell.type...authors.labels.")
 ggsave(output_paths[["umap"]], plt, device = "pdf")
 
 saveRDS(proj, file = output_paths[["project_out"]])
