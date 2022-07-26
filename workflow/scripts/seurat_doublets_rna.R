@@ -51,6 +51,7 @@ proj <- doubletFinder_v3(
     nExp = nExp.poi.adj,
     sct = TRUE
 )
+print(head(proj@meta.data)) ####
 object_filtered <- subset(proj, subset = DF.classification == "Singlet")
 
 saveRDS(proj, file = output_paths[["project_out_all"]])
