@@ -28,7 +28,7 @@ proj <- FindNeighbors(proj, dims = 1:30)
 proj <- FindClusters(object = proj)
 
 # pK identification (no ground-truth)
-sweep.list <- paramSweep_v3(proj, PCs = 1:30, num.cores = params[["threads"]])
+sweep.list <- paramSweep_v3(proj, PCs = 1:30, num.cores = snakemake@threads)
 sweep.stats <- summarizeSweep(sweep.list)
 bcmvn <- find.pK(sweep.stats)
 
