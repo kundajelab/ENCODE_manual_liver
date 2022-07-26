@@ -17,12 +17,15 @@ log_paths = snakemake@log
 set.seed(params[["seed"]])
 
 proj <- readRDS(file = input_paths[["project_rna"]])
+all.genes <- rownames(proj)
+proj <- ScaleData(proj, features = all.genes)
+
 ref <- readRDS(file = input_paths[["project_ref"]])
 # print(head(ref@meta.data)) ####
-print(ref) ####
+# print(ref) ####
 ref <- subset(x = ref, subset = `Factor.Value.inferred.cell.type...authors.labels.` != "")
-print(ref) ####
-print(proj) ####
+# print(ref) ####
+# print(proj) ####
 
 anchors <- FindTransferAnchors(
   reference = ref,
@@ -44,9 +47,6 @@ proj$cell_type <- proj$predicted.id
 
 # plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
 # ggsave(output_paths[["umap_ref"]], plt, device = "pdf")
-
-all.genes <- rownames(proj)
-proj <- ScaleData(proj, features = all.genes)
 
 proj <- RunPCA(proj, features = VariableFeatures(object = proj))
 
