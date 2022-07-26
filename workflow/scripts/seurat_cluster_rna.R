@@ -18,7 +18,7 @@ set.seed(params[["seed"]])
 
 proj <- readRDS(file = input_paths[["project_rna"]])
 ref <- readRDS(file = input_paths[["project_ref"]])
-ref <- ref[!is.na(ref[["Factor.Value.inferred.cell.type...authors.labels."]])]
+ref <- ref[!is.na(ref@meta.data[["Factor.Value.inferred.cell.type...authors.labels."]])]
 
 anchors <- FindTransferAnchors(
   reference = ref,
