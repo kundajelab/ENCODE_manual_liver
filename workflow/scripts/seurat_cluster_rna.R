@@ -25,7 +25,7 @@ ref <- readRDS(file = input_paths[["project_ref"]])
 # print(ref) ####
 # print(proj) ####
 ref$cell_type <- ref[["Factor.Value.inferred.cell.type...authors.labels."]]
-replace(ref$cell_type, ref$cell_type == "", "Unknown")
+ref$cell_type <- replace(ref$cell_type, ref$cell_type == "", "Unknown")
 
 anchors <- FindTransferAnchors(
   reference = ref,
