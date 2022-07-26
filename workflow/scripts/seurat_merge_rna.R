@@ -28,7 +28,7 @@ proj_merged <- RunPCA(proj_merged, features = VariableFeatures(object = proj_mer
 plt <- DimPlot(proj_merged, reduction = "pca", group.by = "dataset")
 ggsave(output_paths[["pca_pre_harmony"]], plt, device = "pdf")
 
-proj_merged <- RunHarmony(proj_merged, c("subject", "lab"), assay.use = "SCT")
+proj_merged <- RunHarmony(proj_merged, "dataset", assay.use = "SCT")
 
 plt <- DimPlot(proj_merged, reduction = "harmony", group.by = "dataset")
 ggsave(output_paths[["pca_post_harmony"]], plt, device = "pdf")
