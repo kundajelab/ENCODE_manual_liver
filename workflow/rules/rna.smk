@@ -63,12 +63,32 @@ rule seurat_doublets_rna:
     script:
         "../scripts/seurat_doublets_rna.R"
 
+rule seurat_label_rna:
+    """
+    Seurat RNA reference labeling
+    """
+    input:
+        project_rna = "results/{sample}/rna/seurat_doublets_rna/proj_filtered.rds",
+        project_ref = "reference/seurat_build_reference/proj.rds"
+    output:
+        project_out = "results/{sample}/rna/seurat_label_rna/proj.rds",
+        umap = "results/{sample}/rna/seurat_label_rna/umap.pdf",
+        umap_dataset = "results/{sample}/rna/seurat_label_rna/umap_dataset.pdf"
+    params:
+        seed = config["seurat_seed"],
+    log:
+        console = "logs/{sample}/rna/seurat_label_rna/console.log"
+    conda:
+        "../envs/seurat.yaml"
+    script:
+        "../scripts/seurat_label_rna.R"
+
 rule seurat_merge_rna:
     """
     Merge RNA samples
     """
     input:
-        projects_in = expand("results/{sample}/rna/seurat_doublets_rna/proj_filtered.rds", sample=samples_rna)
+        projects_in = expand("results/{sample}/rna/seurat_label_rna/proj.rds", sample=samples_rna)
     output:
         project_out = "results_merged/rna/seurat_merge_rna/proj.rds",
         pca_pre_harmony = "results_merged/rna/seurat_merge_rna/pca_pre_harmony.pdf",
@@ -82,22 +102,22 @@ rule seurat_merge_rna:
     script:
         "../scripts/seurat_merge_rna.R"
 
-rule seurat_cluster_rna:
-    """
-    Seurat RNA clustering
-    """
-    input:
-        project_rna = "results_merged/rna/seurat_merge_rna/proj.rds",
-        project_ref = "reference/seurat_build_reference/proj.rds"
-    output:
-        project_out = "results_merged/rna/seurat_cluster_rna/proj.rds",
-        umap = "results_merged/rna/seurat_cluster_rna/umap.pdf",
-        umap_dataset = "results_merged/rna/seurat_cluster_rna/umap_dataset.pdf"
-    params:
-        seed = config["seurat_seed"],
-    log:
-        console = "logs/merged/rna/seurat_cluster_rna/console.log"
-    conda:
-        "../envs/seurat.yaml"
-    script:
-        "../scripts/seurat_cluster_rna.R"
+# rule seurat_cluster_rna:
+#     """
+#     Seurat RNA clustering
+#     """
+#     input:
+#         project_rna = "results_merged/rna/seurat_merge_rna/proj.rds",
+#         project_ref = "reference/seurat_build_reference/proj.rds"
+#     output:
+#         project_out = "results_merged/rna/seurat_cluster_rna/proj.rds",
+#         umap = "results_merged/rna/seurat_cluster_rna/umap.pdf",
+#         umap_dataset = "results_merged/rna/seurat_cluster_rna/umap_dataset.pdf"
+#     params:
+#         seed = config["seurat_seed"],
+#     log:
+#         console = "logs/merged/rna/seurat_cluster_rna/console.log"
+#     conda:
+#         "../envs/seurat.yaml"
+#     script:
+#         "../scripts/seurat_cluster_rna.R"

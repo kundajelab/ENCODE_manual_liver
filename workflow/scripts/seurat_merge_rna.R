@@ -36,6 +36,12 @@ ggsave(output_paths[["pca_post_harmony"]], plt, device = "pdf")
 proj_merged <- FindNeighbors(proj_merged, dims = 1:30, reduction = "harmony")
 proj_merged <- RunUMAP(proj_merged, dims = 1:30, reduction = "harmony")
 
+plt <- DimPlot(proj, reduction = "umap", group.by = "cell_type")
+ggsave(output_paths[["umap"]], plt, device = "pdf")
+
+plt <- DimPlot(proj, reduction = "umap", group.by = "dataset")
+ggsave(output_paths[["umap_dataset"]], plt, device = "pdf")
+
 saveRDS(proj_merged, file = output_paths[["project_out"]])
 
 sink(type = "message")
