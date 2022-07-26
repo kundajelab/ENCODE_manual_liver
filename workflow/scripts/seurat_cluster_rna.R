@@ -16,7 +16,7 @@ log_paths = snakemake@log
 
 set.seed(params[["seed"]])
 
-proj <- readRDS(file = input_paths[["project_rna"]])=
+proj <- readRDS(file = input_paths[["project_rna"]])
 
 ref <- readRDS(file = input_paths[["project_ref"]])
 # print(head(ref@meta.data)) ####
