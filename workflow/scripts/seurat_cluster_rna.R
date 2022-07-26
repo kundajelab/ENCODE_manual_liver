@@ -48,6 +48,9 @@ proj$cell_type <- proj$predicted.id
 # plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
 # ggsave(output_paths[["umap_ref"]], plt, device = "pdf")
 
+all.genes <- rownames(proj)
+proj <- ScaleData(proj, features = all.genes)
+
 proj <- RunPCA(proj, features = VariableFeatures(object = proj))
 
 proj <- FindNeighbors(proj, dims = 1:10)
