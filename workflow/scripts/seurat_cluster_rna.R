@@ -22,6 +22,7 @@ ref <- readRDS(file = input_paths[["project_ref"]])
 print(ref) ####
 ref <- subset(x = ref, subset = `Factor.Value.inferred.cell.type...authors.labels.` != "")
 print(ref) ####
+print(proj) ####
 
 anchors <- FindTransferAnchors(
   reference = ref,
