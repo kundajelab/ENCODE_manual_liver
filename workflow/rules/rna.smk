@@ -34,7 +34,6 @@ rule seurat_build_rna:
         project_out = "results/{sample}/rna/seurat_build_rna/proj.rds",
         qc_violin = "results/{sample}/rna/seurat_build_rna/qc_violin.pdf",
         qc_scatter = "results/{sample}/rna/seurat_build_rna/qc_scatter.pdf",
-        var_features = "results/{sample}/rna/seurat_build_rna/var_features.pdf",
     params:
         sample_name = lambda w: w.sample,
         seed = config["seurat_seed"]
