@@ -45,12 +45,32 @@ rule seurat_build_rna:
     script:
         "../scripts/build_seurat_rna.R"
 
+rule seurat_doublets_rna:
+    """
+    Filter doublets
+    """
+    input:
+        project_in = "results/{sample}/rna/seurat_build_rna/proj.rds"
+    output:
+        project_out_all = "results/{sample}/rna/seurat_doublets_rna/proj_all.rds",
+        project_out_filtered = "results/{sample}/rna/seurat_doublets_rna/proj_filtered.rds"
+    params:
+        seed = config["seurat_seed"]
+    log:
+        console = "logs/{sample}/rna/seurat_build_rna/console.log"
+    threads:
+        config["max_threads_per_rule"]
+    conda:
+        "../envs/seurat.yaml"
+    script:
+        "../scripts/seurat_doublets_rna.R"
+
 rule seurat_merge_rna:
     """
     Merge RNA samples
     """
     input:
-        projects_in = expand("results/{sample}/rna/seurat_build_rna/proj.rds", sample=samples_rna)
+        projects_in = expand("results/{sample}/rna/seurat_doublets_rna/proj_filtered.rds", sample=samples_rna)
     output:
         project_out = "results_merged/rna/seurat_merge_rna/proj.rds",
     params:
