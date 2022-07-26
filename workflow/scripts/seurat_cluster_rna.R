@@ -51,11 +51,14 @@ proj <- ScaleData(proj, features = all.genes)
 
 proj <- RunPCA(proj, features = VariableFeatures(object = proj))
 
-proj <- FindNeighbors(proj, dims = 1:10)
+proj <- FindNeighbors(proj, dims = 1:30)
 
-proj <- RunUMAP(proj, dims = 1:10)
+proj <- RunUMAP(proj, dims = 1:30)
 
 plt <- DimPlot(proj, reduction = "umap", group.by = "cell_type")
 ggsave(output_paths[["umap"]], plt, device = "pdf")
+
+plt <- DimPlot(proj, reduction = "umap", group.by = "dataset")
+ggsave(output_paths[["umap_dataset"]], plt, device = "pdf")
 
 saveRDS(proj, file = output_paths[["project_out"]])

@@ -72,7 +72,7 @@ rule seurat_cluster_rna:
     output:
         project_out = "results_merged/rna/seurat_cluster_rna/proj.rds",
         umap = "results_merged/rna/seurat_cluster_rna/umap.pdf",
-        # umap_ref = "results_merged/rna/seurat_cluster_rna/umap_ref.pdf"
+        umap_dataset = "results_merged/rna/seurat_cluster_rna/umap_dataset.pdf"
     params:
         seed = config["seurat_seed"],
     log:
