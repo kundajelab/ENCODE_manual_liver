@@ -71,6 +71,8 @@ rule seurat_merge_rna:
         projects_in = expand("results/{sample}/rna/seurat_doublets_rna/proj_filtered.rds", sample=samples_rna)
     output:
         project_out = "results_merged/rna/seurat_merge_rna/proj.rds",
+        pca_pre_harmony = "results_merged/rna/seurat_merge_rna/pca_pre_harmony.pdf",
+        pca_post_harmony = "results_merged/rna/seurat_merge_rna/pca_post_harmony.pdf"
     params:
         seed = config["seurat_seed"],
     log:

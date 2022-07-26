@@ -8,3 +8,4 @@ dependencies:
   - conda-forge::r-ggplot2=3.3.5
   - conda-forge::r-dplyr=1.0.8
   - conda-forge::r-remotes=2.4.2
+  - bioconda::r-harmony=0.1

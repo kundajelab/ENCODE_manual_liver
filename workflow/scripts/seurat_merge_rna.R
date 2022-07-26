@@ -8,6 +8,7 @@ library(dplyr)
 library(Seurat)
 library(patchwork)
 library(ggplot2)
+library(harmony)
 
 params = snakemake@params 
 input_paths = snakemake@input
@@ -21,8 +22,19 @@ projs <- lapply(input_paths[["projects_in"]], readRDS)
 
 proj_merged <- merge(projs[[1]], projs[-1], project = "merged_rna")
 
-proj_merged <- NormalizeData(proj_merged)
-proj_merged <- FindVariableFeatures(proj_merged, selection.method = "vst", nfeatures = 2000)
+proj_merged <- SCTransform(proj_merged, vars.to.regress = "percent.mt", verbose = FALSE)
+proj_merged <- RunPCA(proj_merged, features = VariableFeatures(object = proj_merged))
+
+plt <- DimPlot(proj, reduction = "pca", group.by = "dataset")
+ggsave(output_paths[["pca_pre_harmony"]], plt, device = "pdf")
+
+proj_merged <- RunHarmony(proj_merged, c("subject", "lab"), assay.use = "SCT")
+
+plt <- DimPlot(proj_merged, reduction = "harmony", group.by = "dataset")
+ggsave(output_paths[["pca_post_harmony"]], plt, device = "pdf")
+
+proj_merged <- FindNeighbors(proj_merged, dims = 1:30, reduction = "harmony")
+proj_merged <- RunUMAP(proj_merged, dims = 1:30)
 
 saveRDS(proj_merged, file = output_paths[["project_out"]])
 
