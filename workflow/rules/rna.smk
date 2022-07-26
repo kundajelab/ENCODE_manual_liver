@@ -71,9 +71,7 @@ rule seurat_label_rna:
         project_rna = "results/{sample}/rna/seurat_doublets_rna/proj_filtered.rds",
         project_ref = "reference/seurat_build_reference/proj.rds"
     output:
-        project_out = "results/{sample}/rna/seurat_label_rna/proj.rds",
-        umap = "results/{sample}/rna/seurat_label_rna/umap.pdf",
-        umap_dataset = "results/{sample}/rna/seurat_label_rna/umap_dataset.pdf"
+        project_out = "results/{sample}/rna/seurat_label_rna/proj.rds"
     params:
         seed = config["seurat_seed"],
     log:
@@ -92,7 +90,9 @@ rule seurat_merge_rna:
     output:
         project_out = "results_merged/rna/seurat_merge_rna/proj.rds",
         pca_pre_harmony = "results_merged/rna/seurat_merge_rna/pca_pre_harmony.pdf",
-        pca_post_harmony = "results_merged/rna/seurat_merge_rna/pca_post_harmony.pdf"
+        pca_post_harmony = "results_merged/rna/seurat_merge_rna/pca_post_harmony.pdf",
+        umap = "results_merged/rna/seurat_cluster_rna/umap.pdf",
+        umap_dataset = "results_merged/rna/seurat_cluster_rna/umap_dataset.pdf"
     params:
         seed = config["seurat_seed"],
     log:
