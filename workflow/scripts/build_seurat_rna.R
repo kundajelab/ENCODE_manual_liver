@@ -39,23 +39,7 @@ plot2 <- FeatureScatter(proj, feature1 = "nCount_RNA", feature2 = "nFeature_RNA"
 plt <- plot1 + plot2
 ggsave(output_paths[["qc_scatter"]], plt, device = "pdf")
 
-proj <- subset(proj, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
-
-proj <- NormalizeData(proj, normalization.method = "LogNormalize", scale.factor = 10000)
-
-proj <- FindVariableFeatures(proj, selection.method = "vst", nfeatures = 2000)
-
-# Identify the 10 most highly variable genes
-top10 <- head(VariableFeatures(proj), 10)
-
-# plot variable features with and without labels
-plot1 <- VariableFeaturePlot(proj)
-plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
-plt <- plot1 + plot2
-ggsave(output_paths[["var_features"]], plt, device = "pdf")
-
-all.genes <- rownames(proj)
-proj <- ScaleData(proj, features = all.genes)
+proj <- SCTransform(proj, vars.to.regress = "percent.mt", verbose = FALSE)
 
 saveRDS(proj, file = output_paths[["project_out"]])
 
