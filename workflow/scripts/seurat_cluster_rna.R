@@ -20,7 +20,7 @@ proj <- readRDS(file = input_paths[["project_rna"]])
 ref <- readRDS(file = input_paths[["project_ref"]])
 # print(head(ref@meta.data)) ####
 ref <- subset(x = ref, subset = `Factor.Value.inferred.cell.type...authors.labels.` != "")
-print(head(ref@meta.data)) ####
+print(ref) ####
 
 anchors <- FindTransferAnchors(
   reference = ref,
@@ -36,8 +36,8 @@ proj <- MapQuery(
   reference.reduction = "pca"
   # reduction.model = "umap"
 )
-print(head(proj@meta.data)) ####
-print(head(ref@meta.data)) ####
+# print(head(proj@meta.data)) ####
+# print(head(ref@meta.data)) ####
 proj$cell_type <- proj$predicted.id
 
 # plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
