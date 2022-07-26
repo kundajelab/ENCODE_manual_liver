@@ -52,7 +52,9 @@ proj <- doubletFinder_v3(
     sct = TRUE
 )
 print(head(proj@meta.data)) ####
-object_filtered <- subset(proj, subset = DF.classifications_0.25_0.3_995 == "Singlet")
+doublets_col <- grep("DF.classifications", names(proj@meta.data), value = TRUE)
+proj$doublet_classification <- proj[[doublets_col]]
+object_filtered <- subset(proj, subset = doublet_classification == "Singlet")
 
 saveRDS(proj, file = output_paths[["project_out_all"]])
 saveRDS(proj_filtered, file = output_paths[["project_out_filtered"]])
