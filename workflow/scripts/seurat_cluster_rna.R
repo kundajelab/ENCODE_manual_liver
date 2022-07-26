@@ -24,6 +24,8 @@ ref <- readRDS(file = input_paths[["project_ref"]])
 # ref <- subset(x = ref, subset = `Factor.Value.inferred.cell.type...authors.labels.` != "")
 # print(ref) ####
 # print(proj) ####
+ref$cell_type <- ref[["Factor.Value.inferred.cell.type...authors.labels."]]
+replace(ref$cell_type, ref$cell_type == "", "Unknown")
 
 anchors <- FindTransferAnchors(
   reference = ref,
@@ -35,7 +37,7 @@ proj <- MapQuery(
   anchorset = anchors,
   query = proj,
   reference = ref,
-  refdata = "Factor.Value.inferred.cell.type...authors.labels.",
+  refdata = "cell_type",
   reference.reduction = "pca"
   # reduction.model = "umap"
 )
