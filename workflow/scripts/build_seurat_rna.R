@@ -40,6 +40,9 @@ plt <- plot1 + plot2
 ggsave(output_paths[["qc_scatter"]], plt, device = "pdf")
 
 proj <- SCTransform(proj, vars.to.regress = "percent.mt", verbose = FALSE)
+proj <- RunPCA(proj, features = VariableFeatures(object = proj))
+proj <- FindNeighbors(proj, dims = 1:30)
+proj <- FindClusters(object = proj) 
 
 saveRDS(proj, file = output_paths[["project_out"]])
 
