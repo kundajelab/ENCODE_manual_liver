@@ -59,7 +59,7 @@ proj$cell_type <- proj$predicted.id
 plt <- DimPlot(proj, reduction = "umap", group.by = "cell_type")
 ggsave(output_paths[["umap"]], plt, device = "pdf")
 
-plt <- DimPlot(proj, reduction = "umap", group.by = "dataset")
-ggsave(output_paths[["umap_dataset"]], plt, device = "pdf")
+# plt <- DimPlot(proj, reduction = "umap", group.by = "dataset")
+# ggsave(output_paths[["umap_dataset"]], plt, device = "pdf")
 
 saveRDS(proj, file = output_paths[["project_out"]])

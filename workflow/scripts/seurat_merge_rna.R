@@ -8,7 +8,7 @@ library(dplyr)
 library(Seurat)
 library(patchwork)
 library(ggplot2)
-library(harmony)
+# library(harmony)
 
 params = snakemake@params 
 input_paths = snakemake@input
@@ -20,24 +20,29 @@ set.seed(params[["seed"]])
 
 projs <- lapply(input_paths[["projects_in"]], readRDS)
 
-proj_merged <- merge(projs[[1]], projs[-1], project = "merged_rna")
+features <- SelectIntegrationFeatures(object.list = projs)
+anchors <- FindIntegrationAnchors(object.list = projs, anchor.features = features, reduction = "rpca")
+proj_merged <- IntegrateData(anchorset = anchors)
+DefaultAssay(proj_merged) <- "integrated"
 
-proj_merged <- SCTransform(proj_merged, vars.to.regress = "percent.mt", verbose = FALSE)
-proj_merged <- RunPCA(proj_merged, features = VariableFeatures(object = proj_merged))
+# proj_merged <- merge(projs[[1]], projs[-1], project = "merged_rna")
 
-plt <- DimPlot(proj_merged, reduction = "pca", group.by = "dataset")
-ggsave(output_paths[["pca_pre_harmony"]], plt, device = "pdf")
+# proj_merged <- SCTransform(proj_merged, vars.to.regress = "percent.mt", verbose = FALSE)
+# proj_merged <- RunPCA(proj_merged, features = VariableFeatures(object = proj_merged))
 
-proj_merged <- RunHarmony(proj_merged, "dataset", assay.use = "SCT")
+# plt <- DimPlot(proj_merged, reduction = "pca", group.by = "dataset")
+# ggsave(output_paths[["pca_pre_harmony"]], plt, device = "pdf")
 
-plt <- DimPlot(proj_merged, reduction = "harmony", group.by = "dataset")
-ggsave(output_paths[["pca_post_harmony"]], plt, device = "pdf")
+# proj_merged <- RunHarmony(proj_merged, "dataset", assay.use = "SCT")
+
+# plt <- DimPlot(proj_merged, reduction = "harmony", group.by = "dataset")
+# ggsave(output_paths[["pca_post_harmony"]], plt, device = "pdf")
 
 proj_merged <- FindNeighbors(proj_merged, dims = 1:30, reduction = "harmony")
 proj_merged <- RunUMAP(proj_merged, dims = 1:30, reduction = "harmony")
 
-plt <- DimPlot(proj_merged, reduction = "umap", group.by = "cell_type")
-ggsave(output_paths[["umap"]], plt, device = "pdf")
+# plt <- DimPlot(proj_merged, reduction = "umap", group.by = "cell_type")
+# ggsave(output_paths[["umap"]], plt, device = "pdf")
 
 plt <- DimPlot(proj_merged, reduction = "umap", group.by = "dataset")
 ggsave(output_paths[["umap_dataset"]], plt, device = "pdf")
