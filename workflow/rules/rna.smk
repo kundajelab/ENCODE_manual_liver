@@ -57,7 +57,8 @@ rule seurat_doublets_rna:
     log:
         console = "logs/{sample}/rna/seurat_doublets_rna/console.log"
     threads:
-        config["max_threads_per_rule"]
+        # config["max_threads_per_rule"]
+        1
     conda:
         "../envs/seurat.yaml"
     script:

@@ -26,6 +26,7 @@ proj <- readRDS(file = input_paths[["project_in"]])
 proj <- RunPCA(proj, features = VariableFeatures(object = proj))
 proj <- FindNeighbors(proj, dims = 1:30)
 proj <- FindClusters(object = proj)
+print(proj) ####
 
 # pK identification (no ground-truth)
 sweep.list <- paramSweep_v3(proj, PCs = 1:30, num.cores = snakemake@threads)
