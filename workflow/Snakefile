@@ -39,6 +39,23 @@ with open("config/samples_rna.tsv") as sample_file:
         rep = entries[rep_ind]
         samples_rna.append(f"{exp}-{rep}")
 
+with open("config/samples_multiome.tsv") as sample_file:
+    h = sample_file.readline().rstrip('\n').split('\t')
+    exp_rna_ind = h.index("Experiment_RNA")
+    rep_rna_ind = h.index("Replicate_RNA")
+    exp_atac_ind = h.index("Experiment_RNA")
+    rep_atac_ind = h.index("Replicate_RNA")
+    samples_multiome = []
+    for line in sample_file:
+        if line.startswith("#"):
+            continue
+        entries = line.rstrip('\n').split('\t')
+        exp_rna = entries[exp_rna_ind]
+        rep_rna = entries[rep_rna_ind]
+        exp_atac = entries[exp_atac_ind]
+        rep_atac = entries[rep_atac_ind]
+        samples_multiome.append(f"{exp_rna}-{rep_rna}_{exp_atac}-{rep_atac}")
+
 workdir: 
     config['workdir']
 
@@ -61,6 +78,22 @@ rule all:
         # expand("results/{sample}/rna/seurat_clustered/proj.rds", sample=samples_rna)
         "results_merged/rna/seurat_cluster_rna/proj.rds"
 
+def get_experiment_rna(w):
+    x = w.sample.split("_")[0]
+    return x.split("-")[0]
+
+def get_replicate_rna(w):
+    x = w.sample.split("_")[0]
+    return x.split("-")[1]
+
+def get_experiment_atac(w):
+    x = w.sample.split("_")[-1]
+    return x.split("-")[0]
+
+def get_replicate_atac(w):
+    x = w.sample.split("_")[-1]
+    return x.split("-")[1]
+
 rule query_fragments:
     """
     Query ENCODE portal for fragments URL
@@ -68,8 +101,8 @@ rule query_fragments:
     output:
         "results/{sample}/fetch/fragments_url.txt"
     params:
-        experiment = lambda w: w.sample.split("-")[0],
-        replicate = lambda w: w.sample.split("-")[1],
+        experiment = get_experiment_atac,
+        replicate = get_replicate_atac,
         dcc_mode = config["dcc_mode"],
         dcc_api_key = os.environ["DCC_API_KEY"], 
         dcc_secret_key = os.environ["DCC_SECRET_KEY"]
@@ -133,8 +166,8 @@ rule query_expression:
     output:
         "results/{sample}/fetch/expression_url.txt"
     params:
-        experiment = lambda w: w.sample.split("-")[0],
-        replicate = lambda w: w.sample.split("-")[1],
+        experiment = get_experiment_rna,
+        replicate = get_replicate_rna,
         dcc_mode = config["dcc_mode"],
         dcc_api_key = os.environ["DCC_API_KEY"], 
         dcc_secret_key = os.environ["DCC_SECRET_KEY"]
