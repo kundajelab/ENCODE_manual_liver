@@ -105,8 +105,8 @@ rule seurat_cluster_rna:
     Seurat RNA clustering
     """
     input:
-        project_rna = "results_merged/rna/seurat_merge_rna/proj.rds",
-        project_ref = "reference/seurat_build_reference/proj.rds"
+        project_in = "results_merged/rna/seurat_merge_rna/proj.rds",
+        # project_ref = "reference/seurat_build_reference/proj.rds"
     output:
         project_out = "results_merged/rna/seurat_cluster_rna/proj.rds",
         umap = "results_merged/rna/seurat_cluster_rna/umap.pdf",

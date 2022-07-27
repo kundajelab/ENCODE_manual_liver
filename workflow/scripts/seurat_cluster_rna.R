@@ -16,36 +16,36 @@ log_paths = snakemake@log
 
 set.seed(params[["seed"]])
 
-proj <- readRDS(file = input_paths[["project_rna"]])
+proj <- readRDS(file = input_paths[["project_in"]])
 
-ref <- readRDS(file = input_paths[["project_ref"]])
+# ref <- readRDS(file = input_paths[["project_ref"]])
 # print(head(ref@meta.data)) ####
 # print(ref) ####
 # ref <- subset(x = ref, subset = `Factor.Value.inferred.cell.type...authors.labels.` != "")
 # print(ref) ####
 # print(proj) ####
 
-anchors <- FindTransferAnchors(
-  reference = ref,
-  query = proj,
-  normalization.method = "SCT",
-  dims = 1:30, 
-  reference.reduction = "pca",
-  reference.assay = "SCT",
-  query.assay = "integrated",
-  reduction = "rpca"
-)
-proj <- MapQuery(
-  anchorset = anchors,
-  query = proj,
-  reference = ref,
-  refdata = "cell_type",
-  reference.reduction = "pca"
-  # reduction.model = "umap"
-)
+# anchors <- FindTransferAnchors(
+#   reference = ref,
+#   query = proj,
+#   normalization.method = "SCT",
+#   dims = 1:30, 
+#   reference.reduction = "pca",
+#   reference.assay = "SCT",
+#   query.assay = "integrated",
+#   reduction = "rpca"
+# )
+# proj <- MapQuery(
+#   anchorset = anchors,
+#   query = proj,
+#   reference = ref,
+#   refdata = "cell_type",
+#   reference.reduction = "pca"
+#   # reduction.model = "umap"
+# )
 # print(head(proj@meta.data)) ####
 # print(head(ref@meta.data)) ####
-proj$cell_type <- proj$predicted.id
+# proj$cell_type <- proj$predicted.id
 
 # plt_ref <- DimPlot(proj, reduction = "umap.ref", group.by = "cell_type")
 # ggsave(output_paths[["umap_ref"]], plt, device = "pdf")
@@ -55,11 +55,11 @@ proj$cell_type <- proj$predicted.id
 
 # proj <- RunPCA(proj, features = VariableFeatures(object = proj))
 
-# proj <- FindNeighbors(proj, dims = 1:30)
+proj <- FindNeighbors(proj, dims = 1:30)
+proj <- FindClusters(object = proj) 
+proj <- RunUMAP(proj, dims = 1:30)
 
-# proj <- RunUMAP(proj, dims = 1:30)
-
-plt <- DimPlot(proj, reduction = "umap", group.by = "cell_type")
+plt <- DimPlot(proj, reduction = "umap", group.by = "seurat_clusters")
 ggsave(output_paths[["umap"]], plt, device = "pdf")
 
 # plt <- DimPlot(proj, reduction = "umap", group.by = "dataset")
