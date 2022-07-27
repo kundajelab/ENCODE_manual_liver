@@ -87,7 +87,7 @@ rule seurat_merge_rna:
     Merge RNA samples
     """
     input:
-        projects_in = expand("results/{sample}/rna/seurat_label_rna/proj.rds", sample=samples_rna)
+        projects_in = expand("results/{sample}/rna/seurat_label_rna/proj.rds", sample=samples_rna+samples_multiome)
     output:
         project_out = "results_merged/rna/seurat_merge_rna/proj.rds",
         pca_pre_harmony = "results_merged/rna/seurat_merge_rna/pca_pre_harmony.pdf",
