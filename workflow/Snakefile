@@ -43,8 +43,8 @@ with open("config/samples_multiome.tsv") as sample_file:
     h = sample_file.readline().rstrip('\n').split('\t')
     exp_rna_ind = h.index("Experiment_RNA")
     rep_rna_ind = h.index("Replicate_RNA")
-    exp_atac_ind = h.index("Experiment_RNA")
-    rep_atac_ind = h.index("Replicate_RNA")
+    exp_atac_ind = h.index("Experiment_ATAC")
+    rep_atac_ind = h.index("Replicate_ATAC")
     samples_multiome = []
     for line in sample_file:
         if line.startswith("#"):
