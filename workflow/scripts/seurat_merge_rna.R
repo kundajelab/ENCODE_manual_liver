@@ -21,8 +21,8 @@ set.seed(params[["seed"]])
 projs <- lapply(input_paths[["projects_in"]], readRDS)
 
 features <- SelectIntegrationFeatures(object.list = projs)
-anchors <- FindIntegrationAnchors(object.list = projs, anchor.features = features, reduction = "rpca")
-proj_merged <- IntegrateData(anchorset = anchors)
+anchors <- FindIntegrationAnchors(object.list = projs, anchor.features = features, reduction = "rpca", normalization.method = "SCT", dims = 1:30)
+proj_merged <- IntegrateData(anchorset = anchors, normalization.method = "SCT", dims = 1:30) 
 DefaultAssay(proj_merged) <- "integrated"
 
 # proj_merged <- merge(projs[[1]], projs[-1], project = "merged_rna")
