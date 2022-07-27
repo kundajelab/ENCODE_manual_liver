@@ -31,7 +31,7 @@ anchors <- FindTransferAnchors(
   normalization.method = "SCT",
   dims = 1:30, 
 #   reference.reduction = "pca",
-  reduction = "cca"
+  reduction = "rpca"
 )
 proj <- MapQuery(
   anchorset = anchors,
