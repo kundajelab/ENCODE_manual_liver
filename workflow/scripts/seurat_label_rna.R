@@ -38,7 +38,7 @@ proj <- MapQuery(
   query = proj,
   reference = ref,
   refdata = "cell_type",
-  reference.reduction = "pca"
+  reference.reduction = "pcaproject"
 )
 proj$cell_type <- proj$predicted.id
 
