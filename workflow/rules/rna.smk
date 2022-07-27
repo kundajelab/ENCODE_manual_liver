@@ -71,7 +71,8 @@ rule seurat_label_rna:
         project_rna = "results/{sample}/rna/seurat_doublets_rna/proj_filtered.rds",
         project_ref = "reference/seurat_build_reference/proj.rds"
     output:
-        project_out = "results/{sample}/rna/seurat_label_rna/proj.rds"
+        project_out = "results/{sample}/rna/seurat_label_rna/proj.rds",
+        umap = "results/{sample}/rna/seurat_label_rna/umap.pdf"
     params:
         seed = config["seurat_seed"],
     log:
