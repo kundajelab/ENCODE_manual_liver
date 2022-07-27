@@ -38,8 +38,8 @@ DefaultAssay(proj_merged) <- "integrated"
 # plt <- DimPlot(proj_merged, reduction = "harmony", group.by = "dataset")
 # ggsave(output_paths[["pca_post_harmony"]], plt, device = "pdf")
 
-proj_merged <- FindNeighbors(proj_merged, dims = 1:30, reduction = "harmony")
-proj_merged <- RunUMAP(proj_merged, dims = 1:30, reduction = "harmony")
+proj_merged <- FindNeighbors(proj_merged, dims = 1:30, reduction = "pca")
+proj_merged <- RunUMAP(proj_merged, dims = 1:30, reduction = "pca")
 
 # plt <- DimPlot(proj_merged, reduction = "umap", group.by = "cell_type")
 # ggsave(output_paths[["umap"]], plt, device = "pdf")
