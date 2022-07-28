@@ -14,4 +14,4 @@ seurat_seed: 2398756
 rna_ref_counts: https://www.livercellatlas.org/data_files/toDownload/rawData_human.zip
 rna_ref_metadata: https://www.livercellatlas.org/data_files/toDownload/annot_humanAll.csv
 
-doublet_formation_rate: 0.075
+doublet_formation_rate: 0.15
