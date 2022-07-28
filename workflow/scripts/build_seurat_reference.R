@@ -39,7 +39,7 @@ proj <- CreateSeuratObject(
 proj[["percent.mt"]] <- PercentageFeatureSet(proj, pattern = "^MT-")
 proj$cell_type <- proj[["annot"]]
 # proj$cell_type <- replace(proj$cell_type, proj$cell_type == "", "Unknown")
-# proj <- subset(proj, subset = cell_type != "Unknown")
+proj <- subset(proj, subset = cell_type != NA)
 
 print(head(proj@meta.data)) ####
 
