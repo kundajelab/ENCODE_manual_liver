@@ -55,7 +55,7 @@ rule seurat_doublets_rna:
         project_out_filtered = "results/{sample}/rna/seurat_doublets_rna/proj_filtered.rds"
     params:
         seed = config["seurat_seed"],
-        doublet_rage = config["doublet_formation_rate"]
+        doublet_rate = config["doublet_formation_rate"]
     log:
         console = "logs/{sample}/rna/seurat_doublets_rna/console.log"
     threads:
