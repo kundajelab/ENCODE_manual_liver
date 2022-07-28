@@ -27,6 +27,7 @@ expression_matrix <- ReadMtx(
 metadata <- read.table(file = input_paths[["metadata"]], sep = ',', header = TRUE)
 rownames(metadata) <- metadata$cell
 print(head(metadata)) ####
+expression_matrix <- expression_matrix[rownames(metadata)]
 
 # Initialize the Seurat object with the raw (non-normalized data).
 proj <- CreateSeuratObject(
@@ -39,7 +40,7 @@ proj <- CreateSeuratObject(
 proj[["percent.mt"]] <- PercentageFeatureSet(proj, pattern = "^MT-")
 proj$cell_type <- proj[["annot"]]
 # proj$cell_type <- replace(proj$cell_type, proj$cell_type == "", "Unknown")
-proj <- subset(proj, subset = cell_type != "NA")
+# proj <- subset(proj, subset = cell_type != "NA")
 
 print(head(proj@meta.data)) ####
 
