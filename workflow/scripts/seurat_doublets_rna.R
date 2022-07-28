@@ -38,7 +38,7 @@ optimal.pk <- as.numeric(levels(optimal.pk))[optimal.pk]
 ## Homotypic doublet proportion estimate
 annotations <- proj@meta.data$seurat_clusters
 homotypic.prop <- modelHomotypic(annotations) 
-nExp.poi <- round(optimal.pk * nrow(proj@meta.data)) ## Assuming 7.5% doublet formation rate - tailor for your dataset
+nExp.poi <- round(params[["doublet_rate"]] * nrow(proj@meta.data)) 
 nExp.poi.adj <- round(nExp.poi * (1 - homotypic.prop))
 
 # run DoubletFinder
