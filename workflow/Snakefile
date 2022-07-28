@@ -247,34 +247,34 @@ rule extract_rna_ref_counts:
         "reference/fetch/expression.zip"
     output:
         matrix = "reference/fetch/matrix.mtx",
-        features = "reference/fetch/features_raw.tsv",
+        features = "reference/fetch/features.tsv",
         barcodes = "reference/fetch/barcodes.tsv",
     conda:
         "envs/fetch.yaml"
     shell:
-        "unzip -p {input} E-MTAB-10553.aggregated_filtered_counts.mtx > {output.matrix}; "
-        "unzip -p {input} E-MTAB-10553.aggregated_filtered_counts.mtx_rows > {output.features}; "
-        "unzip -p {input} E-MTAB-10553.aggregated_filtered_counts.mtx_cols > {output.barcodes} "
+        "unzip -p {input} rawData_human/countTable_human/matrix.mtx.gz | zcat > {output.matrix}; "
+        "unzip -p {input} rawData_human/countTable_human/features.tsv.gz | zcat > {output.features}; "
+        "unzip -p {input} rawData_human/countTable_human/barcodes.tsv.gz | zcat > {output.barcodes} "
 
-rule rna_ref_gene_names:
-    """
-    Fill in gene names for RNA reference
-    """
-    input:
-        "reference/fetch/features_raw.tsv"
-    output:
-        "reference/fetch/features.tsv"
-    conda:
-        "envs/fetch.yaml"
-    script:
-        "scripts/add_gene_names.py"
+# rule rna_ref_gene_names:
+#     """
+#     Fill in gene names for RNA reference
+#     """
+#     input:
+#         "reference/fetch/features_raw.tsv"
+#     output:
+#         "reference/fetch/features.tsv"
+#     conda:
+#         "envs/fetch.yaml"
+#     script:
+#         "scripts/add_gene_names.py"
 
 rule download_rna_ref_metadata:
     """
     Download reference metadata
     """
     output:
-        "reference/fetch/metadata.tsv"
+        "reference/fetch/metadata.csv"
     params:
         url = config["rna_ref_metadata"]
     conda:

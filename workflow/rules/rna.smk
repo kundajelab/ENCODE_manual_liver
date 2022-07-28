@@ -6,7 +6,7 @@ rule seurat_build_reference:
         mat = "reference/fetch/matrix.mtx",
         features = "reference/fetch/features.tsv",
         cells = "reference/fetch/barcodes.tsv",
-        metadata = "reference/fetch/metadata.tsv"
+        metadata = "reference/fetch/metadata.csv"
     output:
         project_out = "reference/seurat_build_reference/proj.rds",
         qc_violin = "reference/seurat_build_reference/qc_violin.pdf",
@@ -106,7 +106,7 @@ rule seurat_cluster_rna:
     """
     input:
         project_in = "results_merged/rna/seurat_merge_rna/proj.rds",
-        # project_ref = "reference/seurat_build_reference/proj.rds"
+        project_ref = "reference/seurat_build_reference/proj.rds"
     output:
         project_out = "results_merged/rna/seurat_cluster_rna/proj.rds",
         umap = "results_merged/rna/seurat_cluster_rna/umap.pdf",

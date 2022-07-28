@@ -20,11 +20,12 @@ set.seed(params[["seed"]])
 expression_matrix <- ReadMtx(
   mtx = input_paths[["mat"]], 
   features = input_paths[["features"]],
-  cells = input_paths[["cells"]]
+  cells = input_paths[["cells"]],
+  feature.column = 1,
 )
 # print(expression_matrix) ####
-metadata <- read.table(file = input_paths[["metadata"]], sep = '\t', header = TRUE)
-rownames(metadata) <- metadata$Assay
+metadata <- read.table(file = input_paths[["metadata"]], sep = ',', header = TRUE)
+rownames(metadata) <- metadata$cell
 print(head(metadata)) ####
 
 # Initialize the Seurat object with the raw (non-normalized data).
@@ -36,9 +37,9 @@ proj <- CreateSeuratObject(
     meta.data = metadata
 )
 proj[["percent.mt"]] <- PercentageFeatureSet(proj, pattern = "^MT-")
-proj$cell_type <- proj[["Factor.Value.inferred.cell.type...authors.labels."]]
-proj$cell_type <- replace(proj$cell_type, proj$cell_type == "", "Unknown")
-proj <- subset(proj, subset = cell_type != "Unknown")
+proj$cell_type <- proj[["annot"]]
+# proj$cell_type <- replace(proj$cell_type, proj$cell_type == "", "Unknown")
+# proj <- subset(proj, subset = cell_type != "Unknown")
 
 print(head(proj@meta.data)) ####
 
