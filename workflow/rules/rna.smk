@@ -28,9 +28,10 @@ rule seurat_build_rna:
     input:
         mat = "results/{sample}/fetch/matrix.mtx",
         features = "results/{sample}/fetch/features.tsv",
-        cells =  "results/{sample}/fetch/barcodes.tsv"
+        cells = "results/{sample}/fetch/barcodes.tsv"
     output:
         project_out = "results/{sample}/rna/seurat_build_rna/proj.rds",
+        metadata = "results/{sample}/rna/seurat_build_rna/metadata.tsv",
         qc_violin = "results/{sample}/rna/seurat_build_rna/qc_violin.pdf",
         qc_scatter = "results/{sample}/rna/seurat_build_rna/qc_scatter.pdf",
     params:

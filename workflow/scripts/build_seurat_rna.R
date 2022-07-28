@@ -23,13 +23,14 @@ expression_matrix <- ReadMtx(
   cells = input_paths[["cells"]]
 )
 # Initialize the Seurat object with the raw (non-normalized data).
-proj <- CreateSeuratObject(counts = expression_matrix, project = params[["sample_name"]], min.cells = 3, min.features = 200)
+proj <- CreateSeuratObject(counts = expression_matrix, project = params[["sample_name"]], min.cells = 3, min.features = 0)
 proj <- AddMetaData(
   object = proj,
   metadata = rep(params[["sample_name"]], length(Cells(proj))),
   col.name = 'dataset'
 )
 proj[["percent.mt"]] <- PercentageFeatureSet(proj, pattern = "^MT-")
+proj[["percent.ribo"]] <- PercentageFeatureSet(proj, pattern = "^RP[SL]")
 
 plt <- VlnPlot(proj, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 ggsave(output_paths[["qc_violin"]], plt, device = "pdf")
@@ -38,6 +39,10 @@ plot1 <- FeatureScatter(proj, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot2 <- FeatureScatter(proj, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 plt <- plot1 + plot2
 ggsave(output_paths[["qc_scatter"]], plt, device = "pdf")
+
+write.table(proj@meta.data, file=output_paths[["metadata"]], quote=FALSE, sep='\t', col.names = NA)
+
+proj <- subset(proj, subset = nFeature_RNA > 200 & percent.mt < 5)
 
 proj <- SCTransform(proj, vars.to.regress = "percent.mt", verbose = FALSE)
 proj <- RunPCA(proj, features = VariableFeatures(object = proj))
