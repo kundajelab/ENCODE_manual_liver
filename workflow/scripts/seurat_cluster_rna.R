@@ -33,7 +33,7 @@ anchors <- FindTransferAnchors(
   reference.reduction = "pca",
   reference.assay = "SCT",
   query.assay = "integrated",
-  reduction = "rpca"
+  reduction = "pcaproject"
 )
 proj <- MapQuery(
   anchorset = anchors,
