@@ -25,7 +25,7 @@ dependencies:
   - bioconda::bioconductor-rtracklayer=1.54.0
   - bioconda::r-harmony=0.1
   - bioconda::macs2=2.2.7.1
-  - bioconda::pysam=0.16.0,
+  - bioconda::pysam=0.16.0
   - austintwang::r-archr
   - austintwang::r-chromvarmotifs
   - austintwang::r-presto
