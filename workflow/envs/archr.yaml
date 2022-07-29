@@ -22,9 +22,10 @@ dependencies:
   - bioconda::bioconductor-ensembldb=2.18.1
   - bioconda::bioconductor-qvalue=2.26.0
   - bioconda::bioconductor-bsgenome.hsapiens.ucsc.hg38=1.4.4
+  - bioconda::bioconductor-rtracklayer=1.54.0
   - bioconda::r-harmony=0.1
   - bioconda::macs2=2.2.7.1
-  - bioconda::pysam=0.16.0
+  - bioconda::pysam=0.16.0,
   - austintwang::r-archr
   - austintwang::r-chromvarmotifs
   - austintwang::r-presto

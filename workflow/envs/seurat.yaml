@@ -5,6 +5,7 @@ channels:
 dependencies:
   - conda-forge::r-base=4.1.1
   - conda-forge::r-seurat=4.0.3
+  - conda-forge::r-signac=1.7.0
   - conda-forge::r-ggplot2=3.3.5
   - conda-forge::r-dplyr=1.0.8
   - conda-forge::r-remotes=2.4.2

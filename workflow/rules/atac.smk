@@ -22,7 +22,7 @@ rule archr_build:
     threads:
         max_threads
     conda:
-        "../envs/atac.yaml"
+        "../envs/archr.yaml"
     script:
         "../scripts/build_archr_project.R"
 
@@ -44,7 +44,7 @@ rule archr_lsi:
     threads:
         max_threads
     conda:
-        "../envs/atac.yaml"
+        "../envs/archr.yaml"
     script:
         "../scripts/archr_lsi.R"
 
@@ -59,16 +59,41 @@ rule archr_cluster:
     params:
         seed = config["archr_seed"]
     log:
-        console = "logs/{sample}/atac/archr_atac/console.log",
-        move = "logs/{sample}/atac/archr_atac/move.log",
-        cluster_atac = "logs/{sample}/atac/archr_atac/cluster_atac.log",
-        umap_plot = "logs/{sample}/atac/archr_atac/umap_plot.log",
-        save = "logs/{sample}/atac/archr_atac/save.log"
+        console = "logs/{sample}/atac/archr_cluster/console.log",
+        move = "logs/{sample}/atac/archr_cluster/move.log",
+        cluster_atac = "logs/{sample}/atac/archr_cluster/cluster_atac.log",
+        umap_plot = "logs/{sample}/atac/archr_cluster/umap_plot.log",
+        save = "logs/{sample}/atac/archr_cluster/save.log"
     threads:
         max_threads
     conda:
-        "../envs/atac.yaml"
+        "../envs/archr.yaml"
     script:
         "../scripts/archr_cluster.R"
 
-
+rule archr_peakmatrix:
+    """
+    ArchR clustering
+    """
+    input:
+        project_in = "results/{sample}/atac/archr_clustered"
+    output:
+        project_out = directory("results/{sample}/atac/archr_peakmatrix"),
+        mat_out = "results/{sample}/atac/archr_peakmatrix_mat/mat.mtx",
+        barcodes_out = "results/{sample}/atac/archr_peakmatrix_mat/barcodes_atac.tsv",
+        peaks_out = "results/{sample}/atac/archr_peakmatrix_mat/peaks.tsv",
+    params:
+        seed = config["archr_seed"]
+    log:
+        console = "logs/{sample}/atac/archr_peakmatrix/console.log",
+        move = "logs/{sample}/atac/archr_peakmatrix/move.log",
+        call_peaks = "logs/{sample}/atac/archr_peakmatrix/call_peaks.log",
+        add_peak_mat = "logs/{sample}/atac/archr_peakmatrix/add_peak_mat.log",
+        save_peak_mat = "logs/{sample}/atac/archr_peakmatrix/save_peak_mat.log",
+        save = "logs/{sample}/atac/archr_peakmatrix/save.log"
+    threads:
+        max_threads
+    conda:
+        "../envs/archr.yaml"
+    script:
+        "../scripts/archr_peakmatrix.R"

@@ -7,25 +7,6 @@ min_version("6.6.1")
 configfile: 
     "config/config.yaml"
 
-with open("config/samples.tsv") as sample_file:
-    h = sample_file.readline().rstrip('\n').split('\t')
-    exp_ind = h.index("Experiment")
-    rep_ind = h.index("Replicate")
-    assay_ind = h.index("Assay")
-    samples_atac = []
-    samples_rna = []
-    for line in sample_file:
-        if line.startswith("#"):
-            continue
-        entries = line.rstrip('\n').split('\t')
-        exp = entries[exp_ind]
-        rep = entries[rep_ind]
-        assay = entries[assay_ind]
-        if assay == "ATAC":
-            samples_atac.append(f"{exp}-{rep}")
-        elif assay == "RNA":
-            samples_rna.append(f"{exp}-{rep}")
-
 with open("config/samples_rna.tsv") as sample_file:
     h = sample_file.readline().rstrip('\n').split('\t')
     exp_ind = h.index("Experiment")
@@ -38,6 +19,19 @@ with open("config/samples_rna.tsv") as sample_file:
         exp = entries[exp_ind]
         rep = entries[rep_ind]
         samples_rna.append(f"{exp}-{rep}")
+
+with open("config/samples_atac.tsv") as sample_file:
+    h = sample_file.readline().rstrip('\n').split('\t')
+    exp_ind = h.index("Experiment")
+    rep_ind = h.index("Replicate")
+    samples_atac = []
+    for line in sample_file:
+        if line.startswith("#"):
+            continue
+        entries = line.rstrip('\n').split('\t')
+        exp = entries[exp_ind]
+        rep = entries[rep_ind]
+        samples_atac.append(f"{exp}-{rep}")
 
 with open("config/samples_multiome.tsv") as sample_file:
     h = sample_file.readline().rstrip('\n').split('\t')
@@ -74,7 +68,7 @@ rule all:
     Generate all outputs (default)
     """
     input: 
-        # expand("results/{sample}/atac/archr_clustered", sample=samples_atac),
+        expand("results/{sample}/atac/archr_peakmatrix", sample=samples_atac), ####
         # expand("results/{sample}/rna/seurat_clustered/proj.rds", sample=samples_rna)
         "results_merged/rna/seurat_cluster_rna/proj.rds"
 
