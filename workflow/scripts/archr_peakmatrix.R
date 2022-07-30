@@ -73,7 +73,7 @@ peaks <- rowRanges(se)
 
 writeMM(obj = mat, file=output_paths[["mat_out"]])
 write.table(barcodes, file=output_paths[["barcodes_out"]], quote=FALSE, sep='\t', col.names = NA)
-export.bed(peaks, con=[["peaks_out"]])
+export.bed(peaks, con=output_paths[["peaks_out"]])
 
 
 saveArchRProject(
