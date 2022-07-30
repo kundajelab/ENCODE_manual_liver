@@ -45,6 +45,12 @@ proj <- saveArchRProject(
 
 ##########
 
+proj <- addGroupCoverages(
+  ArchRProj = proj,
+  groupBy = "Clusters_ATAC",
+  logFile = log_paths[["pseudobulks"]]
+)
+
 # Call peaks
 proj <- addReproduciblePeakSet(
     ArchRProj = proj, 

@@ -87,6 +87,7 @@ rule archr_peakmatrix:
     log:
         console = "logs/{sample}/atac/archr_peakmatrix/console.log",
         move = "logs/{sample}/atac/archr_peakmatrix/move.log",
+        pseudobulks = "logs/{sample}/atac/archr_peakmatrix/pseudobulks.log",
         call_peaks = "logs/{sample}/atac/archr_peakmatrix/call_peaks.log",
         add_peak_mat = "logs/{sample}/atac/archr_peakmatrix/add_peak_mat.log",
         save_peak_mat = "logs/{sample}/atac/archr_peakmatrix/save_peak_mat.log",
