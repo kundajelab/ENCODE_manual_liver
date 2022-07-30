@@ -49,7 +49,6 @@ proj <- saveArchRProject(
 proj <- addReproduciblePeakSet(
     ArchRProj = proj, 
     groupBy = "Clusters_ATAC", 
-    pathToMacs2 = pathToMacs2,
     logFile = log_paths[["call_peaks"]]
 )
 proj <- addPeakMatrix(proj, logFile = log_paths[["add_peak_mat"]])
