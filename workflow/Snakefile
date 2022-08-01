@@ -68,8 +68,7 @@ rule all:
     Generate all outputs (default)
     """
     input: 
-        "results_merged/atac/archr_clustered"
-        # expand("results/{sample}/rna/seurat_clustered/proj.rds", sample=samples_rna)
+        # "results_merged/atac/archr_clustered",
         "results_merged/rna/seurat_cluster_rna/proj.rds"
 
 def get_experiment_rna(w):
