@@ -4,8 +4,8 @@ rule archr_build:
     Build ArchR project
     """
     input:
-        frag = expand("results/{sample}/fetch/fragments.tsv.gz", samples_atac+samples_multiome),
-        frag_ind = expand("results/{sample}/fetch/fragments.tsv.gz.tbi", samples_atac+samples_multiome),
+        frag = expand("results/{sample}/fetch/fragments.tsv.gz", sample=samples_atac+samples_multiome),
+        frag_ind = expand("results/{sample}/fetch/fragments.tsv.gz.tbi", sample=samples_atac+samples_multiome),
     output:
         qc_dir = directory("results_merged/atac/archr_qc"),
         project_dir = directory("results_merged/atac/archr_init"),
