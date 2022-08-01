@@ -60,7 +60,7 @@ proj <- FindNeighbors(proj, dims = 1:30, reduction="harmony")
 proj <- FindClusters(object = proj) 
 # proj <- RunUMAP(proj, dims = 1:30)
 
-plt <- DimPlot(proj, reduction = "umap", group.by = "seurat_clusters")
+plt <- DimPlot(proj, reduction = "umap", group.by = "seurat_clusters", label = TRUE)
 ggsave(output_paths[["umap"]], plt, device = "pdf")
 
 # plt <- DimPlot(proj, reduction = "umap", group.by = "dataset")
