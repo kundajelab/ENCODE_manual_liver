@@ -34,7 +34,7 @@ chrom_assay <- CreateChromatinAssay(
   min.features = 200
 )
 
-pbmc <- CreateSeuratObject(
+proj <- CreateSeuratObject(
   counts = chrom_assay,
   assay = "peaks"
 )

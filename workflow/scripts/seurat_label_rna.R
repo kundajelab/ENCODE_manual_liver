@@ -40,12 +40,12 @@ proj <- MapQuery(
   refdata = "cell_type",
   reference.reduction = "pcaproject"
 )
-proj$cell_type <- proj$predicted.id
+proj$cell_type_ref <- proj$predicted.id
 
 proj <- FindNeighbors(proj, dims = 1:30, reduction = "pca")
 proj <- RunUMAP(proj, dims = 1:30, reduction = "pca")
 
-plt <- DimPlot(proj, reduction = "umap", group.by = "cell_type")
+plt <- DimPlot(proj, reduction = "umap", group.by = "cell_type_ref")
 ggsave(output_paths[["umap"]], plt, device = "pdf")
 
 saveRDS(proj, file = output_paths[["project_out"]])

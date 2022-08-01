@@ -80,7 +80,7 @@ rule archr_peakmatrix:
     output:
         project_out = directory("results/{sample}/atac/archr_peakmatrix"),
         mat_out = "results/{sample}/atac/archr_peakmatrix_mat/mat.mtx",
-        barcodes_out = "results/{sample}/atac/archr_peakmatrix_mat/barcodes_atac.tsv",
+        barcodes_out = "results/{sample}/atac/archr_peakmatrix_mat/barcode_metadata.tsv",
         peaks_out = "results/{sample}/atac/archr_peakmatrix_mat/peaks.tsv",
     params:
         seed = config["archr_seed"]
