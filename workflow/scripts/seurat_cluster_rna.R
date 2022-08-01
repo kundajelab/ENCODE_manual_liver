@@ -56,7 +56,7 @@ print(proj) ####
 
 # proj <- RunPCA(proj, features = VariableFeatures(object = proj))
 
-proj <- FindNeighbors(proj, dims = 1:30)
+proj <- FindNeighbors(proj, dims = 1:30, reduction="harmony")
 proj <- FindClusters(object = proj) 
 proj <- RunUMAP(proj, dims = 1:30)
 
