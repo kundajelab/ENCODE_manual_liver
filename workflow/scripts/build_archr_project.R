@@ -18,7 +18,7 @@ Sys.setenv("HDF5_USE_FILE_LOCKING" = "FALSE")
 Sys.setenv("RHDF5_USE_FILE_LOCKING" = "FALSE")
 
 build_archr_project <- function(params, input_paths, output_paths, threads, log_paths) {
-    arrow_sample_name <- params[["sample_name"]]
+    arrow_sample_names <- unlist(params[["sample_names"]])
     seed <- params[["seed"]]
     min_frags <- params[["min_frags"]]
 
@@ -28,16 +28,16 @@ build_archr_project <- function(params, input_paths, output_paths, threads, log_
 
     addArchRGenome("hg38")
 
-    frag_path <- input_paths[["frag"]]
+    frag_paths <- unlist(input_paths[["frags"]])
 
     arrow_output_dir <- output_paths[["arrow_dir"]]
-    arrow_output_name <- file.path(arrow_output_dir, arrow_sample_name)
+    arrow_output_names <- file.path(arrow_output_dir, arrow_sample_names)
     # print(arrow_output_dir) ####
     dir.create(arrow_output_dir, recursive = TRUE)
     arrows <- createArrowFiles(
-        inputFiles = c(frag_path),
-        sampleNames = c(arrow_sample_name),
-        outputNames = c(arrow_output_name),
+        inputFiles = frag_paths,
+        sampleNames = arrow_sample_names,
+        outputNames = arrow_output_names,
         offsetPlus = 0,
         offsetMinus = 0,
         minFrags = min_frags,

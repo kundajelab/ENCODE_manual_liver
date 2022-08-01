@@ -47,7 +47,7 @@ proj <- saveArchRProject(
 # Cluster cells by ATAC LSI values
 proj <- addClusters(
     input = proj,
-    reducedDims = "LSI_ATAC",
+    reducedDims = "Harmony_ATAC",
     method = "Seurat",
     name = "Clusters_ATAC",
     resolution = 0.8,
