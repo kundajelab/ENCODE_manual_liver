@@ -19,7 +19,7 @@ set.seed(params[["seed"]])
 
 
 projs <- lapply(input_paths[["projects_in"]], readRDS)
-# print(projs[[1]]) ####
+print(projs[[1]]) ####
 
 # features <- SelectIntegrationFeatures(object.list = projs, assay = rep("SCT", times = length(projs)))
 # projs <- PrepSCTIntegration(object.list = projs, anchor.features = features, assay = "SCT")
