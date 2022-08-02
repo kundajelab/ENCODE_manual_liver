@@ -59,10 +59,10 @@ rule archr_harmony:
     params:
         seed = config["archr_seed"]
     log:
-        console = "logs/merged/atac/archr_lsi/console.log",
-        move = "logs/merged/atac/archr_lsi/move.log",
-        lsi_atac = "logs/merged/atac/archr_lsi/lsi_atac.log",
-        save = "logs/merged/atac/archr_lsi/save.log"
+        console = "logs/merged/atac/archr_harmony/console.log",
+        move = "logs/merged/atac/archr_harmony/move.log",
+        umap_plot = "logs/merged/atac/archr_harmony/umap_plot.log",
+        save = "logs/merged/atac/archr_harmony/save.log"
     threads:
         max_threads
     conda:
