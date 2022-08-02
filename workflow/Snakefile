@@ -104,7 +104,7 @@ rule query_fragments:
     conda:
         "envs/fetch.yaml"
     script:
-        "scripts/get_download_url.py"
+        "scripts/get_fragments_url.py"
 
 rule download_fragments:
     """
