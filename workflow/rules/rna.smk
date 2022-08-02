@@ -122,3 +122,23 @@ rule seurat_cluster_rna:
         "../envs/seurat.yaml"
     script:
         "../scripts/seurat_cluster_rna.R"
+
+rule seurat_name_rna:
+    """
+    Seurat RNA cluster naming
+    """
+    input:
+        project_in = "results_merged/rna/seurat_cluster_rna/proj.rds",
+    output:
+        project_out = "results_merged/rna/seurat_name_rna/proj.rds",
+        umap = "results_merged/rna/seurat_name_rna/umap_clusters.pdf",
+        metadata = "results_merged/rna/seurat_name_rna/metadata.tsv",
+    params:
+        seed = config["seurat_seed"],
+        cluster_names = rna_cluster_names
+    log:
+        console = "logs/merged/rna/seurat_name_rna/console.log"
+    conda:
+        "../envs/seurat.yaml"
+    script:
+        "../scripts/seurat_cluster_rna.R"

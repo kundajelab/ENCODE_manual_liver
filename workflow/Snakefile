@@ -50,6 +50,11 @@ with open("config/samples_multiome.tsv") as sample_file:
         rep_atac = entries[rep_atac_ind]
         samples_multiome.append(f"{exp_rna}-{rep_rna}_{exp_atac}-{rep_atac}")
 
+with open("config/rna_cluster_names.tsv") as f:
+    rna_cluster_names = []
+    for line in f:
+        rna_cluster_names.append(line.rstrip("\n"))
+        
 workdir: 
     config['workdir']
 
@@ -69,7 +74,7 @@ rule all:
     """
     input: 
         "results_merged/atac/archr_clustered",
-        "results_merged/rna/seurat_cluster_rna/proj.rds"
+        "results_merged/rna/seurat_name_rna/proj.rds"
 
 def get_experiment_rna(w):
     x = w.sample.split("_")[0]
