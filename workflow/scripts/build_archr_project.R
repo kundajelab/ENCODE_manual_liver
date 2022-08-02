@@ -21,6 +21,7 @@ build_archr_project <- function(params, input_paths, output_paths, threads, log_
     arrow_sample_names <- unlist(params[["sample_names"]])
     seed <- params[["seed"]]
     min_frags <- params[["min_frags"]]
+    min_tss_enr <- params[["min_tss_enr"]]
 
     set.seed(seed)
     
@@ -41,6 +42,7 @@ build_archr_project <- function(params, input_paths, output_paths, threads, log_
         offsetPlus = 0,
         offsetMinus = 0,
         minFrags = min_frags,
+        minTSS = min_tss_enr,
         addTileMat = TRUE,
         addGeneScoreMat = TRUE,
         force = TRUE,

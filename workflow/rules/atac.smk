@@ -13,7 +13,8 @@ rule archr_build:
     params:
         sample_names = samples_atac + samples_multiome,
         seed = config["archr_seed"],
-        min_frags = config["archr_min_frags"]
+        min_frags = config["archr_min_frags"],
+        min_tss_enr = config["archr_min_tss_enr"]
     log:
         console = "logs/merged/atac/archr_build/console.log",
         arrow_create = "logs/merged/atac/archr_build/arrow_create.log",

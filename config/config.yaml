@@ -7,7 +7,8 @@ dcc_award: UM1HG009442
 dcc_mode: prod
 
 archr_seed: 8757647
-archr_min_frags: 3000
+archr_min_frags: 5000
+archr_min_tss_enr: 5
 
 seurat_seed: 2398756
 
