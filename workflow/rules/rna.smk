@@ -141,4 +141,4 @@ rule seurat_name_rna:
     conda:
         "../envs/seurat.yaml"
     script:
-        "../scripts/seurat_cluster_rna.R"
+        "../scripts/seurat_name_rna.R"
