@@ -25,7 +25,9 @@ proj <- RenameIdents(proj, new.cluster.ids)
 plt <- DimPlot(proj, reduction = "umap", label = TRUE)
 ggsave(output_paths[["umap"]], plt)
 
-plt <- FeaturePlot(object = proj, features = "nCount_RNA")
+proj$log10_count_RNA <- log10(proj$nCount_RNA)
+
+plt <- FeaturePlot(object = proj, features = "log10_count_RNA")
 ggsave(output_paths[["umap_qc"]], plt)
 
 write.table(proj@meta.data, file=output_paths[["metadata"]], quote=FALSE, sep='\t', col.names = NA)
