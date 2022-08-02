@@ -61,7 +61,7 @@ p1 <- plotEmbedding(
     ArchRProj = proj, 
     colorBy = "cellColData", 
     name = "Clusters_ATAC", 
-    embedding = "UMAP_ATAC",
+    embedding = "UMAP_Harmony",
     logFile = log_paths[["umap_plot"]]
 )
 
