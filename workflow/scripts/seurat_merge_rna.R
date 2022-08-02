@@ -33,6 +33,15 @@ proj_merged <- merge(projs[[1]], projs[-1], project = "merged_rna", add.cell.ids
 proj_merged <- SCTransform(proj_merged, vars.to.regress = "percent.mt", verbose = FALSE)
 proj_merged <- RunPCA(proj_merged)
 
+proj_merged <- FindNeighbors(proj_merged, dims = 1:30, reduction = "pca")
+proj_merged <- RunUMAP(proj_merged, dims = 1:30, reduction = "pca")
+
+plt <- DimPlot(proj_merged, reduction = "umap", group.by = "cell_type_ref")
+ggsave(output_paths[["umap_pre_harmony"]], plt, device = "pdf")
+
+plt <- DimPlot(proj_merged, reduction = "umap", group.by = "dataset")
+ggsave(output_paths[["umap_dataset_pre_harmony"]], plt, device = "pdf")
+
 # plt <- DimPlot(proj_merged, reduction = "pca", group.by = "dataset")
 # ggsave(output_paths[["pca_pre_harmony"]], plt, device = "pdf")
 

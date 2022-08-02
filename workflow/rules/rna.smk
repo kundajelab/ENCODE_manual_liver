@@ -94,6 +94,8 @@ rule seurat_merge_rna:
         projects_in = expand("results/{sample}/rna/seurat_label_rna/proj.rds", sample=samples_rna+samples_multiome)
     output:
         project_out = "results_merged/rna/seurat_merge_rna/proj.rds",
+        umap_dataset_pre_harmony = "results_merged/rna/seurat_merge_rna/umap_dataset_pre_harmony.pdf",
+        umap_pre_harmony = "results_merged/rna/seurat_merge_rna/umap_pre_harmony.pdf",
         umap_dataset = "results_merged/rna/seurat_merge_rna/umap_dataset.pdf",
         umap = "results_merged/rna/seurat_merge_rna/umap.pdf",
     params:
