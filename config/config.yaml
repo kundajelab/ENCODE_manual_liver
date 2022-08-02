@@ -11,7 +11,7 @@ archr_min_frags: 5000
 archr_min_tss_enr: 5
 
 seurat_seed: 2398756
-seurat_min_count: 5000
+seurat_min_count: 500
 seurat_max_pct_mito: 5
 
 rna_ref_counts: https://www.livercellatlas.org/data_files/toDownload/rawData_human.zip
