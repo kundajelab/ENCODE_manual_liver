@@ -42,7 +42,7 @@ ggsave(output_paths[["qc_scatter"]], plt, device = "pdf")
 
 write.table(proj@meta.data, file=output_paths[["metadata"]], quote=FALSE, sep='\t', col.names = NA)
 
-proj <- subset(proj, subset = nFeature_RNA > 200 & percent.mt < 5)
+proj <- subset(proj, subset = nCount_RNA > params[["min_count_rna"]] & params[["max_pct_mito_rna"]] < 5)
 
 proj <- SCTransform(proj, vars.to.regress = "percent.mt", verbose = FALSE)
 proj <- RunPCA(proj, features = VariableFeatures(object = proj))

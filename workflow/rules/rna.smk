@@ -36,7 +36,9 @@ rule seurat_build_rna:
         qc_scatter = "results/{sample}/rna/seurat_build_rna/qc_scatter.pdf",
     params:
         sample_name = lambda w: w.sample,
-        seed = config["seurat_seed"]
+        seed = config["seurat_seed"],
+        min_count_rna = config["seurat_min_count"],
+        max_pct_mito_rna = config["seurat_max_pct_mito"]
     log:
         console = "logs/{sample}/rna/seurat_build_rna/console.log"
     conda:
