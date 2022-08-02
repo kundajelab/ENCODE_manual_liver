@@ -68,7 +68,7 @@ rule archr_harmony:
     conda:
         "../envs/archr.yaml"
     script:
-        "../scripts/archr_lsi.R"
+        "../scripts/archr_harmony.R"
 
 rule archr_cluster:
     """
