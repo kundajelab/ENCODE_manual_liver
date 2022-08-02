@@ -132,6 +132,7 @@ rule seurat_name_rna:
     output:
         project_out = "results_merged/rna/seurat_name_rna/proj.rds",
         umap = "results_merged/rna/seurat_name_rna/umap_clusters.pdf",
+        umap_qc = "results_merged/rna/seurat_name_rna/umap_qc.pdf",
         metadata = "results_merged/rna/seurat_name_rna/metadata.tsv",
     params:
         seed = config["seurat_seed"],
