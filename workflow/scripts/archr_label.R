@@ -51,6 +51,7 @@ head(clustdata) ####
 cellnames <- row.names(clustdata)
 proj_index <- match(getCellNames(ArchRProj = proj), cellnames)
 proj_index <- proj_index[!is.na(proj_index)]
+head(proj_index) ####
 head(clustdata[proj_index]) ####
 proj <- addCellColData(
     ArchRProj = proj,
