@@ -49,6 +49,7 @@ clustdata <- read.table(file = input_paths[["label_data"]], sep = '\t', header =
 cellnames <- row.names(clustdata)
 proj_index <- match(getCellNames(ArchRProj = proj), cellnames)
 proj_index <- proj_index[!is.na(proj_index)]
+head(clustdata[proj_index][[1]]) ####
 proj <- addCellColData(
     ArchRProj = proj,
     data = clustdata[proj_index][[1]],
