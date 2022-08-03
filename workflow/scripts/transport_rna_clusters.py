@@ -10,10 +10,10 @@ def load_whitelists(wl_atac_path, wl_rna_path):
         for line_a, line_r in zip(a, r):
             bc_a = line_a.rstrip("\n")
             bc_r = line_r.rstrip("\n")
-            bc_a_rc = reverse_complement(bc_a)
+            bc_r_rc = reverse_complement(bc_r)
 
-            bc_map[bc_a] = bc_r
-            bc_map_rc[bc_a_rc] = bc_r
+            bc_map[bc_r] = bc_a
+            bc_map_rc[bc_r_rc] = bc_a
 
     return bc_map, bc_map_rc
 
@@ -29,17 +29,16 @@ def main(in_path, out_path, wl_atac_path, wl_rna_path):
             entries = line.rstrip('\n').split('\t')
             bc_in = entries[0]
             label = entries[label_ind]
-            dataset, bc_atac = bc_in.rsplit('_', 1)
+            dataset, bc_rna = bc_in.rsplit('_', 1)
 
-            if bc_atac in bc_map:
-                bc_rna = bc_map[bc_atac]
-            elif bc_atac in bc_map_rc:
-                bc_rna = bc_map_rc[bc_atac]
+            if bc_rna in bc_map:
+                bc_atac = bc_map[bc_rna]
+            elif bc_rna in bc_map_rc:
+                bc_atac = bc_map_rc[bc_rna]
             else:
-                print(bc_atac) ####
                 continue
 
-            fo.write(f"{dataset}#{bc_rna}\t{label}\n")
+            fo.write(f"{dataset}#{bc_atac}\t{label}\n")
 
 
 in_path = snakemake.input["seurat_data"]
