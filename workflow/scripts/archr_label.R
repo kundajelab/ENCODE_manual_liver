@@ -44,7 +44,7 @@ proj <- saveArchRProject(
 )
 
 ##########
-clustdata <- read.table(file = input_paths[["label_data"]], sep = '\t', header = FALSE, col.names = "seurat_label")
+clustdata <- read.table(file = input_paths[["label_data"]], sep = '\t', header = FALSE, col.names = "seurat_label", row.names = 1)
 
 cellnames <- row.names(clusts_merged)
 proj_index <- match(getCellNames(ArchRProj = proj), cellnames)
