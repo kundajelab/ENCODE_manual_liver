@@ -51,7 +51,7 @@ proj_index <- match(getCellNames(ArchRProj = proj), cellnames)
 proj_index <- proj_index[!is.na(proj_index)]
 proj <- addCellColData(
     ArchRProj = proj,
-    data = clustdata[proj_index],
+    data = clustdata[proj_index][[1]],
     name = "seurat_label",
     cells = cellnames[proj_index],
     force = FALSE
