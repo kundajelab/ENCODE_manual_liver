@@ -36,6 +36,7 @@ def main(in_path, out_path, wl_atac_path, wl_rna_path):
             elif bc_atac in bc_map_rc:
                 bc_rna = bc_map_rc[bc_atac]
             else:
+                print(bc_atac) ####
                 continue
 
             fo.write(f"{dataset}#{bc_rna}\t{label}\n")
