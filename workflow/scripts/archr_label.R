@@ -44,6 +44,7 @@ proj <- saveArchRProject(
 )
 
 ##########
+head(read.table(file = input_paths[["label_data"]], sep = '\t', header = FALSE)) ####
 clustdata <- read.table(file = input_paths[["label_data"]], sep = '\t', header = FALSE, row.names = 1)
 
 cellnames <- row.names(clustdata)
