@@ -38,7 +38,7 @@ def main(in_path, out_path, wl_atac_path, wl_rna_path):
             else:
                 continue
 
-            fo.write(f"{dataset}${bc_rna}\t{label}\n")
+            fo.write(f"{dataset}#{bc_rna}\t{label}\n")
 
 
 in_path = snakemake.input["seurat_data"]
