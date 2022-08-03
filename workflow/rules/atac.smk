@@ -99,7 +99,7 @@ rule transport_rna_labels:
     Parse labels from seurat metadata
     """
     input:
-        in_path = "results_merged/atac/archr_harmony",
+        in_path = "results_merged/rna/seurat_name_rna/metadata.tsv",
         wl_atac = "whitelists/atac.txt",
         wl_rna = "whitelists/rna.txt"
     output:
