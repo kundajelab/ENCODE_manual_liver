@@ -293,5 +293,5 @@ rule download_barcode_wl:
     conda:
         "envs/fetch.yaml"
     shell:
-        "curl --no-progress-meter -L '{params.url_rna}' | zcat -f > {output_rna}; "
-        "curl --no-progress-meter -L '{params.url_atac}' | zcat -f > {output_atac}"
+        "curl --no-progress-meter -L '{params.url_rna}' | zcat -f > {output.rna}; "
+        "curl --no-progress-meter -L '{params.url_atac}' | zcat -f > {output.atac}"
