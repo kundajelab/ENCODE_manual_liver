@@ -45,17 +45,18 @@ proj <- saveArchRProject(
 
 ##########
 # head(read.table(file = input_paths[["label_data"]], sep = '\t', header = FALSE)) ####
-clustdata <- read.table(file = input_paths[["label_data"]], sep = '\t', header = FALSE, row.names = 1, comment.char = "")
+clustdata <- read.table(file = input_paths[["label_data"]], sep = '\t', header = FALSE, col.names = 1, comment.char = "")
 head(clustdata) ####
 
 cellnames <- row.names(clustdata)
 proj_index <- match(getCellNames(ArchRProj = proj), cellnames)
 proj_index <- proj_index[!is.na(proj_index)]
 head(proj_index) ####
-head(clustdata[proj_index]) ####
+length(proj_index) ####
+head(clustdata[[0]][proj_index]) ####
 proj <- addCellColData(
     ArchRProj = proj,
-    data = clustdata[proj_index],
+    data = clustdata[[0]][proj_index],
     name = "seurat_label",
     cells = cellnames[proj_index],
     force = FALSE
