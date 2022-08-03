@@ -74,6 +74,7 @@ p1 <- plotEmbedding(
 plotPDF(p1, name = "umap_seurat_label.pdf", ArchRProj = proj, addDOC = FALSE, width = 5, height = 5)
 
 cM <- confusionMatrix(proj$Clusters_ATAC, proj$seurat_label)
+print(cM) ####
 cM <- cM[,colnames(cM)!="NA"]
 labelOld <- rownames(cM)
 labelNew <- colnames(cM)[apply(cM, 1, which.max)]
