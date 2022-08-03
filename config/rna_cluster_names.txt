@@ -1,24 +1,23 @@
 Hepatocytes
 Hepatocytes
 Hepatocytes
+Hepatocytes
+Hepatocytes
 Endothelial cells
 Hepatocytes
+Macrophages
+Cholangiocytes
+Hepatocytes
+Fibroblasts
 T cells
 Hepatocytes
-Macrophages
-Hepatocytes
-Fibroblasts
-Cholangiocytes
-Fibroblasts
-Hepatocytes
-Hepatocytes
-Macrophages
 Hepatocytes
 Hepatocytes
 Hepatocytes
-Endothelial cells
 Hepatocytes
-Fibroblasts
+Hepatocytes
+Hepatocytes
+Hepatocytes
 Hepatocytes
 Hepatocytes
 Hepatocytes

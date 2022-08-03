@@ -25,7 +25,7 @@ proj <- RenameIdents(proj, new.cluster.ids)
 plt <- DimPlot(proj, reduction = "umap", label = TRUE)
 ggsave(output_paths[["umap"]], plt)
 
-proj$clusters_named <- Idents(proj)
+proj$labels_named <- Idents(proj)
 
 proj$log10_count_RNA <- log10(proj$nCount_RNA)
 

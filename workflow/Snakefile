@@ -73,7 +73,7 @@ rule all:
     Generate all outputs (default)
     """
     input: 
-        "results_merged/atac/archr_clustered",
+        "results_merged/atac/archr_label",
         "results_merged/rna/seurat_name_rna/proj.rds"
 
 def get_experiment_rna(w):
@@ -279,3 +279,19 @@ rule download_rna_ref_metadata:
         "envs/fetch.yaml"
     shell:
         "curl --no-progress-meter -L '{params.url}' > {output}"
+
+rule download_barcode_wl:
+    """
+    Download barcode whitelist
+    """
+    output:
+        rna = "whitelists/rna.txt",
+        atac = "whitelists/atac.txt"
+    params:
+        url_rna = config["bc_wl_rna"],
+        url_atac = config["bc_wl_atac"],
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "curl --no-progress-meter -L '{params.url_rna}' | zcat -f > {output_rna}; "
+        "curl --no-progress-meter -L '{params.url_atac}' | zcat -f > {output_atac}"

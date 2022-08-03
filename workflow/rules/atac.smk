@@ -94,30 +94,40 @@ rule archr_cluster:
     script:
         "../scripts/archr_cluster.R"
 
-# rule archr_peakmatrix:
-#     """
-#     ArchR clustering
-#     """
-#     input:
-#         project_in = "results/{sample}/atac/archr_clustered"
-#     output:
-#         project_out = directory("results/{sample}/atac/archr_peakmatrix"),
-#         mat_out = "results/{sample}/atac/archr_peakmatrix_mat/mat.mtx",
-#         barcodes_out = "results/{sample}/atac/archr_peakmatrix_mat/barcode_metadata.tsv",
-#         peaks_out = "results/{sample}/atac/archr_peakmatrix_mat/peaks.tsv",
-#     params:
-#         seed = config["archr_seed"]
-#     log:
-#         console = "logs/{sample}/atac/archr_peakmatrix/console.log",
-#         move = "logs/{sample}/atac/archr_peakmatrix/move.log",
-#         pseudobulks = "logs/{sample}/atac/archr_peakmatrix/pseudobulks.log",
-#         call_peaks = "logs/{sample}/atac/archr_peakmatrix/call_peaks.log",
-#         add_peak_mat = "logs/{sample}/atac/archr_peakmatrix/add_peak_mat.log",
-#         save_peak_mat = "logs/{sample}/atac/archr_peakmatrix/save_peak_mat.log",
-#         save = "logs/{sample}/atac/archr_peakmatrix/save.log"
-#     threads:
-#         max_threads
-#     conda:
-#         "../envs/archr.yaml"
-#     script:
-#         "../scripts/archr_peakmatrix.R"
+rule transport_rna_labels:
+    """
+    Parse labels from seurat metadata
+    """
+    input:
+        in_path = "results_merged/atac/archr_harmony",
+        wl_atac = "whitelists/atac.txt",
+        wl_rna = "whitelists/rna.txt"
+    output:
+        "results_merged/atac/labels_import.tsv"
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/transport_rna_clusters.py"
+
+rule archr_label:
+    """
+    ArchR cluster labeling
+    """
+    input:
+        project_in = "results_merged/atac/archr_clustered",
+        label_data = "results_merged/atac/labels_import.tsv"
+    output:
+        project_out = directory("results_merged/atac/archr_label")
+    params:
+        seed = config["archr_seed"]
+    log:
+        console = "logs/merged/atac/archr_label/console.log",
+        move = "logs/merged/atac/archr_label/move.log",
+        umap_plot = "logs/merged/atac/archr_label/umap_plot.log",
+        save = "logs/merged/atac/archr_label/save.log"
+    threads:
+        max_threads
+    conda:
+        "../envs/archr.yaml"
+    script:
+        "../scripts/archr_label.R"
