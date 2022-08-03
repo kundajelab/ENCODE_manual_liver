@@ -5,20 +5,17 @@ def reverse_complement(seq):
 
 def load_whitelists(wl_atac_path, wl_rna_path):
     bc_map = {}
-    bc_map_rc = {}
     with open(wl_atac_path) as a, open(wl_rna_path) as r:
         for line_a, line_r in zip(a, r):
             bc_a = line_a.rstrip("\n")
             bc_r = line_r.rstrip("\n")
-            bc_r_rc = reverse_complement(bc_r)
 
             bc_map[bc_r] = bc_a
-            bc_map_rc[bc_r_rc] = bc_a
 
-    return bc_map, bc_map_rc
+    return bc_map
 
 def main(in_path, out_path, wl_atac_path, wl_rna_path):
-    bc_map, bc_map_rc = load_whitelists(wl_atac_path, wl_rna_path)
+    bc_map = load_whitelists(wl_atac_path, wl_rna_path)
 
     bcs = []
     with open(in_path) as fi, open(out_path, "w") as fo:
@@ -33,12 +30,11 @@ def main(in_path, out_path, wl_atac_path, wl_rna_path):
 
             if bc_rna in bc_map:
                 bc_atac = bc_map[bc_rna]
-            elif bc_rna in bc_map_rc:
-                bc_atac = bc_map_rc[bc_rna]
             else:
                 continue
 
             fo.write(f"{dataset}#{bc_atac}\t{label}\n")
+            fo.write(f"{dataset}#{reverse_complement(bc_atac)}\t{label}\n")
 
 
 in_path = snakemake.input["seurat_data"]
