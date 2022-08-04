@@ -85,7 +85,7 @@ proj$cell_labels <- mapLabels(proj$Clusters_ATAC, newLabels = labelNew, oldLabel
 
 p <- pheatmap::pheatmap(
     # mat = cM[rowSums(cM)>0,], 
-    mat = cM / rowSums(cM), 
+    mat = cM / (rowSums(cM) + 0.001), 
     color = paletteContinuous("whiteBlue"), 
     border_color = "black"
 )
