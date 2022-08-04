@@ -137,10 +137,11 @@ rule seurat_name_rna:
         project_out = "results_merged/rna/seurat_name_rna/proj.rds",
         umap = "results_merged/rna/seurat_name_rna/umap_clusters.pdf",
         umap_qc = "results_merged/rna/seurat_name_rna/umap_qc.pdf",
+        mat = "results_merged/rna/seurat_name_rna/confusion_mat.pdf",
         metadata = "results_merged/rna/seurat_name_rna/metadata.tsv",
     params:
         seed = config["seurat_seed"],
-        cluster_names = rna_cluster_names
+        # cluster_names = rna_cluster_names
     log:
         console = "logs/merged/rna/seurat_name_rna/console.log"
     conda:
