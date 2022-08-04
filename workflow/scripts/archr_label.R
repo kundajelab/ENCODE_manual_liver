@@ -78,6 +78,7 @@ cM <- as.matrix(cM)
 print(cM) ####
 print(colnames(cM)) ####
 cM <- cM[, !is.na(colnames(cM))]
+cM <- cbind(cM, Unknown = 0.01)
 print(cM) ####
 labelOld <- rownames(cM)
 labelNew <- colnames(cM)[apply(cM, 1, which.max)]
@@ -85,7 +86,7 @@ proj$cell_labels <- mapLabels(proj$Clusters_ATAC, newLabels = labelNew, oldLabel
 
 p <- pheatmap::pheatmap(
     # mat = cM[rowSums(cM)>0,], 
-    mat = cM / (rowSums(cM) + 0.001), 
+    mat = cM / rowSums(cM), 
     color = paletteContinuous("whiteBlue"), 
     border_color = "black"
 )
