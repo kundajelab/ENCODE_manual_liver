@@ -50,7 +50,7 @@ proj$labels_named <- plyr::mapvalues(x = proj$seurat_clusters, from = labelOld, 
 
 plt <- pheatmap::pheatmap(
     mat = cM / rowSums(cM), 
-    color = paletteContinuous("whiteBlue"), 
+    # color = paletteContinuous("whiteBlue"), 
     border_color = "black"
 )
 ggsave(output_paths[["mat"]], plt)
