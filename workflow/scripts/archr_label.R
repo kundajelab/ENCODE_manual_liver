@@ -76,6 +76,7 @@ plotPDF(p1, name = "umap_seurat_label.pdf", ArchRProj = proj, addDOC = FALSE, wi
 cM <- confusionMatrix(proj$Clusters_ATAC, proj$seurat_label)
 cM <- as.matrix(cM)
 print(cM) ####
+print(colnames(cM)) ####
 cM <- cM[,colnames(cM)!=NA]
 print(cM) ####
 labelOld <- rownames(cM)
