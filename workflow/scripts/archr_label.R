@@ -77,7 +77,7 @@ cM <- confusionMatrix(proj$Clusters_ATAC, proj$seurat_label)
 cM <- as.matrix(cM)
 print(cM) ####
 print(colnames(cM)) ####
-cM <- cM[,colnames(cM)!=NA]
+cM <- cM[, !is.na(colnames(cM))]
 print(cM) ####
 labelOld <- rownames(cM)
 labelNew <- colnames(cM)[apply(cM, 1, which.max)]
