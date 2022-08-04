@@ -83,7 +83,7 @@ labelNew <- colnames(cM)[apply(cM, 1, which.max)]
 proj$cell_labels <- mapLabels(proj$Clusters_ATAC, newLabels = labelNew, oldLabels = labelOld)
 
 p <- pheatmap::pheatmap(
-    mat =cM, 
+    mat =cM[rowSums(cM)>0,], 
     color = paletteContinuous("whiteBlue"), 
     border_color = "black"
 )
