@@ -77,12 +77,13 @@ cM <- confusionMatrix(proj$Clusters_ATAC, proj$seurat_label)
 cM <- as.matrix(cM)
 print(cM) ####
 cM <- cM[,colnames(cM)!="NA"]
+print(cM) ####
 labelOld <- rownames(cM)
 labelNew <- colnames(cM)[apply(cM, 1, which.max)]
 proj$cell_labels <- mapLabels(proj$Clusters_ATAC, newLabels = labelNew, oldLabels = labelOld)
 
 p <- pheatmap::pheatmap(
-    mat = as.matrix(cM), 
+    mat =cM, 
     color = paletteContinuous("whiteBlue"), 
     border_color = "black"
 )
