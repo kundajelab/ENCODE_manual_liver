@@ -58,6 +58,15 @@ main <- function(params, input_paths, output_paths, threads, log_paths) {
         logFile = log_paths[["move"]],
     )
 
+    p <- plotEmbedding(
+        ArchRProj = proj, 
+        colorBy = "cellColData", 
+        name = "Sample", 
+        embedding = "UMAP_ATAC",
+        logFile = log_paths[["umap_plot"]]
+    )
+    plotPDF(p, name = "umap_pre_harmony_datasets.pdf", ArchRProj = proj, addDOC = FALSE, width = 5, height = 5)
+
     # Conduct Harmony batch correction
     proj <- addHarmony(
         ArchRProj = proj,
@@ -77,8 +86,8 @@ main <- function(params, input_paths, output_paths, threads, log_paths) {
         metric = "cosine",
     )
 
-    plot_fn <- partial(plot_sample, proj = proj, log_path = log_paths[["umap_plot"]])
-    plts <- lapply(params[["sample_names"]], plot_fn)
+    # plot_fn <- partial(plot_sample, proj = proj, log_path = log_paths[["umap_plot"]])
+    # plts <- lapply(params[["sample_names"]], plot_fn)
 
     p <- plotEmbedding(
         ArchRProj = proj, 
@@ -87,7 +96,7 @@ main <- function(params, input_paths, output_paths, threads, log_paths) {
         embedding = "UMAP_Harmony",
         logFile = log_paths[["umap_plot"]]
     )
-    plotPDF(p, name = "umap_clusters_harmony_timepoints.pdf", ArchRProj = proj, addDOC = FALSE, width = 5, height = 5)
+    plotPDF(p, name = "umap_harmony_datasets.pdf", ArchRProj = proj, addDOC = FALSE, width = 5, height = 5)
     
 
 
