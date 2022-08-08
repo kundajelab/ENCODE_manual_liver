@@ -131,3 +131,27 @@ rule archr_label:
         "../envs/archr.yaml"
     script:
         "../scripts/archr_label.R"
+
+rule archr_linkage:
+    """
+    ArchR unconstrained cluster linkage
+    """
+    input:
+        project_in = "results_merged/atac/archr_clustered",
+        seurat_data = "results_merged/rna/seurat_name_rna/proj.rds"
+    output:
+        project_out = directory("results_merged/atac/archr_linkage")
+    params:
+        seed = config["archr_seed"]
+    log:
+        console = "logs/merged/atac/archr_linkage/console.log",
+        move = "logs/merged/atac/archr_linkage/move.log",
+        umap_plot = "logs/merged/atac/archr_linkage/umap_plot.log",
+        linkage = "logs/merged/atac/archr_linkage/linkage.log",
+        save = "logs/merged/atac/archr_linkage/save.log"
+    threads:
+        max_threads
+    conda:
+        "../envs/archr.yaml"
+    script:
+        "../scripts/archr_linkage.R"
