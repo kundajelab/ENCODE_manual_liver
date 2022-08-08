@@ -55,7 +55,7 @@ proj <- subset(proj, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent
 
 proj <- NormalizeData(proj, normalization.method = "LogNormalize", scale.factor = 10000)
 proj <- FindVariableFeatures(proj, selection.method = "vst", nfeatures = 2000)
-proj <- ScaleData(proj, features = all.genes)
+proj <- ScaleData(proj)
 
 proj <- RunPCA(proj, features = VariableFeatures(object = proj))
 
