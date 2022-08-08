@@ -21,6 +21,29 @@ rule seurat_build_reference:
     script:
         "../scripts/build_seurat_reference.R"
 
+rule seurat_build_reference_log1p:
+    """
+    Build Seurat reference dataset (no SCT)
+    """
+    input:
+        mat = "reference/fetch/matrix.mtx",
+        features = "reference/fetch/features.tsv",
+        cells = "reference/fetch/barcodes.tsv",
+        metadata = "reference/fetch/metadata.csv"
+    output:
+        project_out = "reference/seurat_build_reference_log1p/proj.rds",
+        qc_violin = "reference/seurat_build_reference_log1p/qc_violin.pdf",
+        qc_scatter = "reference/seurat_build_reference_log1p/qc_scatter.pdf",
+        umap =  "reference/seurat_build_reference_log1p/umap.pdf"
+    params:
+        seed = config["seurat_seed"]
+    log:
+        console = "logs/reference/seurat_build_reference_log1p/seurat_build_rna/console.log"
+    conda:
+        "../envs/seurat.yaml"
+    script:
+        "../scripts/build_seurat_reference_log1p.R"
+
 rule seurat_build_rna:
     """
     Build Seurat project

@@ -134,11 +134,11 @@ rule archr_label:
 
 rule archr_linkage:
     """
-    ArchR unconstrained cluster linkage
+    ArchR unconstrained cluster linkage using reference
     """
     input:
         project_in = "results_merged/atac/archr_clustered",
-        seurat_data = "results_merged/rna/seurat_name_rna/proj.rds"
+        seurat_data = "reference/seurat_build_reference_log1p/proj.rds"
     output:
         project_out = directory("results_merged/atac/archr_linkage")
     params:
