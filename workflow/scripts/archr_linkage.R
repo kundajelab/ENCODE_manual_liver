@@ -70,7 +70,7 @@ proj <- addGeneIntegrationMatrix(
     reducedDims = "Harmony_ATAC",
     seRNA = seRNA,
     addToArrow = FALSE,
-    groupRNA = "labels_named",
+    groupRNA = "cell_type",
     nameCell = "predictedCell_link",
     nameGroup = "predictedGroup_link",
     nameScore = "predictedScore_link",
