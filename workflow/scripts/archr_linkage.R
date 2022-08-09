@@ -86,7 +86,7 @@ p1 <- plotEmbedding(
     logFile = log_paths[["umap_plot"]]
 )
 
-plotPDF(p1, name = "umap_labels_link.pdf", ArchRProj = proj, addDOC = FALSE, width = 5, height = 5)
+plotPDF(p1, name = "umap_projection_link.pdf", ArchRProj = proj, addDOC = FALSE, width = 5, height = 5)
 
 cM <- confusionMatrix(proj$Clusters_ATAC, proj$predictedGroup_link)
 cM <- as.matrix(cM)
