@@ -17,9 +17,11 @@ proj <- readRDS(file = input_paths[["project_in"]])
 print(proj) ####
 
 umap_coords <- Embeddings(proj, reduction = "umap")
+head(umap_coords) ####
 write.table(umap_coords, file=output_paths[["umap_coords"]], quote=FALSE, sep='\t', col.names = NA)
 
 emb_coords <- Embeddings(proj, reduction = "harmony")
+head(emb_coords) ####
 write.table(emb_coords, file=output_paths[["emb_coords"]], quote=FALSE, sep='\t', col.names = NA)
 
 sink(type = "message")
