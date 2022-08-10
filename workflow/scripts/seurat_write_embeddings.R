@@ -14,6 +14,7 @@ log_paths = snakemake@log
 set.seed(params[["seed"]])
 
 proj <- readRDS(file = input_paths[["project_in"]])
+print(proj) ####
 
 umap_coords <- Embeddings(proj, reduction = "umap")
 write.table(umap_coords, file=output_paths[["umap_coords"]], quote=FALSE, sep='\t', col.names = NA)
