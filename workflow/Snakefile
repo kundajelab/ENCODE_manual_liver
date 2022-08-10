@@ -60,8 +60,8 @@ workdir:
 
 max_threads = config["max_threads_per_rule"]
 
-def script_path(script_name):
-    return str(workflow.source_path(script_name))
+# def script_path(script_name):
+#     return str(workflow.source_path(script_name))
 
 include:
     "rules/atac.smk"
@@ -75,7 +75,16 @@ rule all:
     input: 
         "results_merged/atac/archr_label",
         "results_merged/atac/archr_linkage",
-        "results_merged/rna/seurat_name_rna/proj.rds"
+        "results_merged/rna/seurat_name_rna/proj.rds",
+        "export/rna/embeddings/harmony.tsv",
+        "export/rna/embeddings/umap.tsv",
+        "export/rna/labels/cell_types.tsv",
+        "export/rna/markers",
+        "export/rna/metadata.tsv",
+        "export/rna/figures/umap_labels.pdf",
+        "export/rna/figures/umap_samples.pdf",
+        "export/rna/figures/README.txt",
+        "export/rna/datasets.txt"
 
 def get_experiment_rna(w):
     x = w.sample.split("_")[0]
@@ -254,19 +263,6 @@ rule extract_rna_ref_counts:
         "unzip -p {input} rawData_human/countTable_human/matrix.mtx.gz | zcat > {output.matrix}; "
         "unzip -p {input} rawData_human/countTable_human/features.tsv.gz | zcat > {output.features}; "
         "unzip -p {input} rawData_human/countTable_human/barcodes.tsv.gz | zcat > {output.barcodes} "
-
-# rule rna_ref_gene_names:
-#     """
-#     Fill in gene names for RNA reference
-#     """
-#     input:
-#         "reference/fetch/features_raw.tsv"
-#     output:
-#         "reference/fetch/features.tsv"
-#     conda:
-#         "envs/fetch.yaml"
-#     script:
-#         "scripts/add_gene_names.py"
 
 rule download_rna_ref_metadata:
     """

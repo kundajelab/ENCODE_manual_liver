@@ -171,3 +171,127 @@ rule seurat_name_rna:
         "../envs/seurat.yaml"
     script:
         "../scripts/seurat_name_rna.R"
+
+rule seurat_write_embeddings:
+    """
+    Seurat save RNA embeddings
+    """
+    input:
+        project_in = "results_merged/rna/seurat_name_rna/proj.rds",
+    output:
+        emb = "results_merged/rna/seurat_write_embeddings/emb_coords.tsv",
+        umap = "results_merged/rna/seurat_write_embeddings/umap_coords.tsv",
+    params:
+        seed = config["seurat_seed"],
+    log:
+        console = "logs/merged/rna/seurat_write_embeddings/console.log"
+    conda:
+        "../envs/seurat.yaml"
+    script:
+        "../scripts/seurat_write_embeddings.R"
+
+rule seurat_write_markers:
+    """
+    Seurat save RNA marker genes
+    """
+    input:
+        project_in = "results_merged/rna/seurat_name_rna/proj.rds",
+    output:
+        markers = directory("results_merged/rna/seurat_write_markers/markers"),
+    params:
+        seed = config["seurat_seed"],
+    log:
+        console = "logs/merged/rna/seurat_write_markers/console.log"
+    conda:
+        "../envs/seurat.yaml"
+    script:
+        "../scripts/seurat_write_markers.R"
+
+rule export_rna_embeddings:
+    """
+    Export RNA embeddings
+    """
+    input:
+        emb = "results_merged/rna/seurat_write_embeddings/emb_coords.tsv",
+        umap = "results_merged/rna/seurat_write_embeddings/umap_coords.tsv",
+    output:
+        emb = "export/rna/embeddings/harmony.tsv",
+        umap = "export/rna/embeddings/umap.tsv",
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/export_rna_embeddings.py"
+
+rule export_rna_labels:
+    """
+    Export RNA cell types
+    """
+    input:
+        "results_merged/rna/seurat_name_rna/metadata.tsv"
+    output:
+        "export/rna/labels/cell_types.tsv",
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/export_rna_labels.py"
+
+rule export_rna_markers:
+    """
+    Export RNA markers
+    """
+    input:
+        markers = "results_merged/rna/seurat_write_markers/markers",
+        genes = expand("results/{sample}/fetch/features.tsv", sample=samples_rna+samples_multiome)
+    output:
+        directory("export/rna/markers")
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/export_rna_markers.py"
+
+rule export_rna_metadata:
+    """
+    Export RNA metadata
+    """
+    input:
+        metadata = expand("results/{sample}/rna/seurat_build_rna/metadata.tsv", sample=samples_rna+samples_multiome),
+        final_data = "results_merged/rna/seurat_name_rna/metadata.tsv"
+    output:
+        "export/rna/metadata.tsv",
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/export_rna_labels.py"
+
+rule export_rna_figures:
+    """
+    Export RNA figures
+    """
+    input:
+        umap_labels = "results_merged/rna/seurat_name_rna/umap_clusters.pdf",
+        umap_samples = "results_merged/rna/seurat_merge_rna/umap_dataset.pdf"
+    output:
+        umap_labels = "export/rna/figures/umap_labels.pdf",
+        umap_samples = "export/rna/figures/umap_samples.pdf",
+        readme = "export/rna/figures/README.txt"
+    params:
+        readme = workflow.source_path("../resources/rna_figures_readme.txt")
+    conda:
+        "../envs/fetch.yaml"
+    shell:
+        "cp {input.umap_labels} {output.umap_labels}; "
+        "cp {input.umap_samples} {output.umap_samples}; "
+        "cp {params.readme} {output.readme}"
+
+rule export_rna_dataset_names:
+    """
+    Export RNA dataset names used in analysis
+    """
+    output:
+        "export/rna/datasets.txt"
+    params:
+        datasets = [i.split("_")[0].split("-")[0] for i in samples_rna+samples_multiome]
+    conda:
+        "../envs/fetch.yaml"
+    shell:
+        "echo {params.datasets} | tr ' ' '\\n' > {output}"
