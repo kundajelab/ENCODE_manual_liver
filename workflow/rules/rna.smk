@@ -261,7 +261,7 @@ rule export_rna_metadata:
     conda:
         "../envs/fetch.yaml"
     script:
-        "../scripts/export_rna_labels.py"
+        "../scripts/export_rna_metadata.py"
 
 rule export_rna_figures:
     """
