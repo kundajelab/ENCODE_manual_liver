@@ -13,6 +13,8 @@ log_paths = snakemake@log
 
 set.seed(params[["seed"]])
 
+dir.create(output_paths[["markers"]])
+
 proj <- readRDS(file = input_paths[["project_in"]])
 
 label_names <- unique(proj$labels_named)

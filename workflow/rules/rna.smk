@@ -179,8 +179,8 @@ rule seurat_write_embeddings:
     input:
         project_in = "results_merged/rna/seurat_name_rna/proj.rds",
     output:
-        emb = "results_merged/rna/seurat_write_embeddings/emb_coords.tsv",
-        umap = "results_merged/rna/seurat_write_embeddings/umap_coords.tsv",
+        emb_coords = "results_merged/rna/seurat_write_embeddings/emb_coords.tsv",
+        umap_coords = "results_merged/rna/seurat_write_embeddings/umap_coords.tsv",
     params:
         seed = config["seurat_seed"],
     log:
