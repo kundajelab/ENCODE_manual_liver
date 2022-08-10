@@ -1,7 +1,7 @@
 HEADER_EMB = """
 # Unified cell embeddings integrated using Harmony
 # cell_id: Cell ID used in integrated analysis
-# harmony_1, harmony_2, … harmony_30: Columns of a 30-dimensional Harmony embedding vector
+# harmony_1, harmony_2, … harmony_50: Columns of a 50-dimensional Harmony embedding vector
 """
 
 HEADER_UMAP = """
