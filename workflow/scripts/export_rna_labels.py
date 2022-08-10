@@ -1,4 +1,5 @@
 HEADER = """
+Cell type labels for each cell
 # cell_id: Cell ID used in integrated analysis
 # cell_type_id: ENCODE ID of the corresponding cell type object
 # cell_type_name: Common name of the cell type
@@ -9,6 +10,9 @@ COLUMNS = "cell_id\tcell_type_id\tcell_type_name\tmembership_score\n"
 
 def main(cell_data_path, out_path):
     with open(cell_data_path) as f, open(out_path, "w") as fo:
+        fo.write(HEADER)
+        fo.write(COLUMNS)
+
         h = f.readline().rstrip('\n').split('\t')
         barcode_ind = 0
         cell_type_ind = h.index("labels_named")
