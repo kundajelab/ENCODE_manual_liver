@@ -33,13 +33,14 @@ def load_records(metadata_path):
             dataset = entries[dataset_ind]
             barcode = entries[barcode_ind]
             cell_id = f"{dataset}_{barcode}"
+            dataset_parsed = dataset.split("_")[0].split("-")[0]
             
             umi_count = int(entries[count_ind])
             frac_mito = float(entries[mito_ind]) / 100
             frac_ribo = float(entries[ribo_ind]) / 100
 
             record = {
-                "dataset": dataset,
+                "dataset": dataset_parsed,
                 "barcode": barcode,
                 "umi_count": umi_count,
                 "frac_mito": frac_mito,
