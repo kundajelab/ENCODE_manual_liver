@@ -29,7 +29,7 @@ def export_label(in_path, out_path, gene_map, label_name):
 
         h = f.readline().rstrip('\n').split('\t')
         gene_name_ind = 0
-        lfc_ind = h.index("avg_logFC")
+        lfc_ind = h.index("avg_log2FC")
         pval_ind = h.index("p_val")
         pval_adj_ind = h.index("p_val_adj")
 
