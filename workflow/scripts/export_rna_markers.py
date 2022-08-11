@@ -50,7 +50,7 @@ def export_label(in_path, out_path, gene_map, label_name):
 
 def main(markers_dir, genes_paths, out_dir):
     gene_map = build_gene_map(genes_paths)
-    labels = os.listdir(markers_dir)
+    labels = [i for i in os.listdir(markers_dir) if not i.startswith(".")]
     for l in labels:
         markers_path = os.path.join(markers_dir, l)
         out_path = os.path.join(out_dir, l)
