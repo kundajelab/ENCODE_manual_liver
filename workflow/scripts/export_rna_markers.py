@@ -49,6 +49,7 @@ def export_label(in_path, out_path, gene_map, label_name):
             fo.write(line)
 
 def main(markers_dir, genes_paths, out_dir):
+    os.makedirs(out_dir, exist_ok=True)
     gene_map = build_gene_map(genes_paths)
     labels = [i for i in os.listdir(markers_dir) if not i.startswith(".")]
     for l in labels:
