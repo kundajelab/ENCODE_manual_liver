@@ -141,7 +141,7 @@ rule archr_label:
         project_in = "results_merged/atac/archr_linkage",
         label_data = "results_merged/atac/labels_import.tsv"
     output:
-        project_out = directory("results_merged/atac/archr_label")
+        project_out = directory("results_merged/atac/archr_label"),
         labels = "results_merged/atac/archr_label_data.tsv"
     params:
         seed = config["archr_seed"]
