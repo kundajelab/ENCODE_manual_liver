@@ -8,6 +8,8 @@ out_dir <- snakemake@output[["out_dir"]]
 dir.create(out_dir)
 
 for (sample in list.files(in_dir)) {
+    dir.create(file.path(out_dir, sample))
+
     in_path_meta <- file.path(in_dir, sample, paste0(sample, "-Pre-Filter-Metadata.rds"))
     print(in_path_meta) ####
     out_path_meta <- file.path(out_dir, sample, "metadata.tsv")
