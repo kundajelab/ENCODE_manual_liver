@@ -47,7 +47,7 @@ emb_coords <- getReducedDims(
   scaleDims = NULL,
   corCutOff = 0.75
 )
-write.table(emb_coords, output_paths[["umap_coords"]], quote = FALSE, sep = '\t', col.names = NA)
+write.table(emb_coords, output_paths[["emb_coords"]], quote = FALSE, sep = '\t', col.names = NA)
 
 markersGS <- getMarkerFeatures(
   ArchRProj = proj,
