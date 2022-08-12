@@ -109,29 +109,6 @@ rule transport_rna_labels:
     script:
         "../scripts/transport_rna_clusters.py"
 
-rule archr_label:
-    """
-    ArchR cluster labeling
-    """
-    input:
-        project_in = "results_merged/atac/archr_clustered",
-        label_data = "results_merged/atac/labels_import.tsv"
-    output:
-        project_out = directory("results_merged/atac/archr_label")
-    params:
-        seed = config["archr_seed"]
-    log:
-        console = "logs/merged/atac/archr_label/console.log",
-        move = "logs/merged/atac/archr_label/move.log",
-        umap_plot = "logs/merged/atac/archr_label/umap_plot.log",
-        save = "logs/merged/atac/archr_label/save.log"
-    threads:
-        max_threads
-    conda:
-        "../envs/archr.yaml"
-    script:
-        "../scripts/archr_label.R"
-
 rule archr_linkage:
     """
     ArchR unconstrained cluster linkage using reference
@@ -155,6 +132,30 @@ rule archr_linkage:
         "../envs/archr.yaml"
     script:
         "../scripts/archr_linkage.R"
+
+rule archr_label:
+    """
+    ArchR cluster labeling
+    """
+    input:
+        project_in = "results_merged/atac/archr_linkage",
+        label_data = "results_merged/atac/labels_import.tsv"
+    output:
+        project_out = directory("results_merged/atac/archr_label")
+        labels = "results_merged/atac/archr_label_data.tsv"
+    params:
+        seed = config["archr_seed"]
+    log:
+        console = "logs/merged/atac/archr_label/console.log",
+        move = "logs/merged/atac/archr_label/move.log",
+        umap_plot = "logs/merged/atac/archr_label/umap_plot.log",
+        save = "logs/merged/atac/archr_label/save.log"
+    threads:
+        max_threads
+    conda:
+        "../envs/archr.yaml"
+    script:
+        "../scripts/archr_label.R"
 
 rule archr_write_qc:
     """
