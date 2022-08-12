@@ -163,7 +163,7 @@ rule archr_write_qc:
     input:
         qc_dir = "results_merged/atac/archr_qc"
     output:
-        out_dir = "results_merged/atac/archr_qc_parsed"
+        out_dir = directory("results_merged/atac/archr_qc_parsed")
     log:
         console = "logs/merged/atac/archr_write_qc/console.log"
     conda:
