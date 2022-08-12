@@ -3,7 +3,7 @@ sink(console_log)
 sink(console_log, type = "message")
 
 in_dir <- snakemake@input[["qc_dir"]]
-out_dir <- snakemake@input[["out_dir"]]
+out_dir <- snakemake@output[["out_dir"]]
 
 for (sample in list.files(in_dir)) {
     in_path_meta <- file.path(in_dir, sample, paste0(sample, "-Pre-Filter-Metadata.rds"))
