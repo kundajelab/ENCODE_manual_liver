@@ -79,7 +79,7 @@ markerList <- getMarkers(
 dir.create(output_paths[["markers"]])
 for (label in names(markerList)) {
     markers <- markerList[[label]]
-    out_path <- file.path(output_paths[["markers"]], paste0(gsub(" ", "_", i), ".tsv"))
+    out_path <- file.path(output_paths[["markers"]], paste0(gsub(" ", "_", label), ".tsv"))
     write.table(markers, file=out_path, quote=FALSE, sep='\t', col.names = NA)
 }
 
