@@ -70,7 +70,7 @@ markersGS <- getMarkerFeatures(
 )
 
 markerList <- getMarkers(
-  seMarker = NULL,
+  seMarker = markersGS,
   cutOff = "FDR <= 0.1 & Log2FC >= 0.5",
   n = NULL,
   returnGR = FALSE
