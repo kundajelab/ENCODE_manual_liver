@@ -155,3 +155,18 @@ rule archr_linkage:
         "../envs/archr.yaml"
     script:
         "../scripts/archr_linkage.R"
+
+rule archr_write_qc:
+    """
+    ArchR write sample QC data
+    """
+    input:
+        qc_dir = "results_merged/atac/archr_qc"
+    output:
+        out_dir = "results_merged/atac/archr_qc_parsed"
+    log:
+        console = "logs/merged/atac/archr_write_qc/console.log"
+    conda:
+        "../envs/archr.yaml"
+    script:
+        "../scripts/archr_write_qc.R"

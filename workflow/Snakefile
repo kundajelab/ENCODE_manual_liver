@@ -75,6 +75,7 @@ rule all:
     input: 
         "results_merged/atac/archr_label",
         "results_merged/atac/archr_linkage",
+        "results_merged/atac/archr_qc_parsed", ####
         "results_merged/rna/seurat_name_rna/proj.rds",
         "export/rna/embeddings/harmony.tsv",
         "export/rna/embeddings/umap.tsv",
