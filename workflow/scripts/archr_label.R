@@ -88,7 +88,7 @@ proj$cell_labels[unknowns] <- proj$cell_labels_link[unknowns]
 
 label_data <- getCellColData(ArchRProj = proj)
 print(label_data) ####
-write.table(label_data, output_paths[["labels"]], sep = '\t', row.names = FALSE, quote = FALSE)
+write.table(label_data, output_paths[["labels"]], quote = FALSE, sep = '\t', col.names = NA)
 
 
 p <- pheatmap::pheatmap(
