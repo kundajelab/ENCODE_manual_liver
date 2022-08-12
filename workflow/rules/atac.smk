@@ -171,3 +171,52 @@ rule archr_write_qc:
         "../envs/archr.yaml"
     script:
         "../scripts/archr_write_qc.R"
+
+rule archr_write_data:
+    """
+    ArchR write cell data
+    """
+    input:
+        project_in = "results_merged/atac/archr_label"
+    output:
+        markers = directory("results_merged/atac/archr_write_data/markers"),
+        emb_coords = "results_merged/atac/archr_write_data/emb_coords.tsv",
+        umap_coords = "results_merged/atac/archr_write_data/umap_coords.tsv",
+    params:
+        seed = config["archr_seed"]
+    log:
+        console = "logs/merged/atac/archr_write_data/console.log",
+        markers = "logs/merged/atac/archr_write_data/markers.log",
+    threads:
+        max_threads
+    conda:
+        "../envs/archr.yaml"
+    script:
+        "../scripts/archr_write_data.R"
+
+rule export_atac_labels:
+    """
+    Export ATAC cell types
+    """
+    input:
+        "results_merged/atac/archr_label_data.tsv"
+    output:
+        "export/atac/labels/cell_types.tsv"
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/export_atac_labels.py"
+
+rule export_atac_metadata:
+    """
+    Export ATAC metadata
+    """
+    input:
+        metadata = "results_merged/atac/archr_qc_parsed",
+        final_data = "results_merged/atac/archr_label_data.tsv"
+    output:
+        "export/atac/metadata.tsv",
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/export_atac_metadata.py"
