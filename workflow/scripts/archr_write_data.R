@@ -36,7 +36,7 @@ addArchRThreads(threads = threads)
 # Load project
 proj <- loadArchRProject(path = input_paths[["project_in"]], force = FALSE, showLogo = FALSE)
 
-umap_coords <- getEmbedding(ArchRProj = proj, embedding = "UMAP_ATAC", returnDF = TRUE)
+umap_coords <- getEmbedding(ArchRProj = proj, embedding = "UMAP_Harmony", returnDF = TRUE)
 write.table(umap_coords, output_paths[["umap_coords"]], quote = FALSE, sep = '\t', col.names = NA)
 
 emb_coords <- getReducedDims(
