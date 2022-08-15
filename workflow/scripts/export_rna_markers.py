@@ -1,4 +1,5 @@
 import os
+import gzip
 
 HEADER = """
 # Marker genes for {label_name}
@@ -23,7 +24,7 @@ def build_gene_map(genes_paths):
     return gene_map
 
 def export_label(in_path, out_path, gene_map, label_name):
-    with open(in_path) as f, open(out_path, "w") as fo:
+    with open(in_path) as f, gzip.open(out_path, "wt") as fo:
         fo.write(HEADER.format(label_name=label_name))
         fo.write(COLUMNS)
 
@@ -54,8 +55,9 @@ def main(markers_dir, genes_paths, out_dir):
     labels = [i for i in os.listdir(markers_dir) if not i.startswith(".")]
     for l in labels:
         markers_path = os.path.join(markers_dir, l)
-        out_path = os.path.join(out_dir, l)
-        label_name = l.split(".")[0].replace("_", " ")
+        label_id = os.path.splitext(l)[0]
+        label_name = label_id.replace("_", " ")
+        out_path = os.path.join(out_dir, f"{label_id}.tsv.gz")
         export_label(markers_path, out_path, gene_map, label_name)
 
 markers_dir = snakemake.input["markers"]

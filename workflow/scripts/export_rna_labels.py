@@ -1,3 +1,5 @@
+import gzip
+
 HEADER = """
 Cell type labels for each cell
 # cell_id: Cell ID used in integrated analysis
@@ -9,7 +11,7 @@ Cell type labels for each cell
 COLUMNS = "cell_id\tcell_type_id\tcell_type_name\tmembership_score\n"
 
 def main(cell_data_path, out_path):
-    with open(cell_data_path) as f, open(out_path, "w") as fo:
+    with open(cell_data_path) as f, gzip.open(out_path, "wt") as fo:
         fo.write(HEADER)
         fo.write(COLUMNS)
 

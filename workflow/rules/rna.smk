@@ -215,8 +215,8 @@ rule export_rna_embeddings:
         emb = "results_merged/rna/seurat_write_embeddings/emb_coords.tsv",
         umap = "results_merged/rna/seurat_write_embeddings/umap_coords.tsv",
     output:
-        emb = "export/rna/embeddings/harmony.tsv",
-        umap = "export/rna/embeddings/umap.tsv",
+        emb = "export/rna/embeddings/harmony.tsv.gz",
+        umap = "export/rna/embeddings/umap.tsv.gz",
     conda:
         "../envs/fetch.yaml"
     script:
@@ -229,7 +229,7 @@ rule export_rna_labels:
     input:
         "results_merged/rna/seurat_name_rna/metadata.tsv"
     output:
-        "export/rna/labels/cell_types.tsv",
+        "export/rna/labels/cell_types.tsv.gz",
     conda:
         "../envs/fetch.yaml"
     script:
@@ -257,7 +257,7 @@ rule export_rna_metadata:
         metadata = expand("results/{sample}/rna/seurat_build_rna/metadata.tsv", sample=samples_rna+samples_multiome),
         final_data = "results_merged/rna/seurat_name_rna/metadata.tsv"
     output:
-        "export/rna/metadata.tsv",
+        "export/rna/metadata.tsv.gz",
     conda:
         "../envs/fetch.yaml"
     script:
@@ -271,9 +271,8 @@ rule export_rna_figures:
         umap_labels = "results_merged/rna/seurat_name_rna/umap_clusters.pdf",
         umap_samples = "results_merged/rna/seurat_merge_rna/umap_dataset.pdf"
     output:
-        umap_labels = "export/rna/figures/umap_labels.pdf",
-        umap_samples = "export/rna/figures/umap_samples.pdf",
-        readme = "export/rna/figures/README.txt"
+        scratch = directory("results_merged/rna/export_figures"),
+        tarball = "export/rna/figures.tar.gz"
     params:
         readme = workflow.source_path("../resources/rna_figures_readme.txt")
     conda:

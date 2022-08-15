@@ -1,4 +1,5 @@
 import os
+import gzip
 
 HEADER = """
 # cell_id: Cell ID used in integrated analysis
@@ -68,7 +69,7 @@ def main(metadata_dir, final_data_path, out_path):
     for i in final_ids:
         records[i]["pass_filter"] = True
 
-    with open(out_path, "w") as f:
+    with gzip.open(out_path, "wt") as f:
         f.write(HEADER)
         f.write(COLUMNS)
 

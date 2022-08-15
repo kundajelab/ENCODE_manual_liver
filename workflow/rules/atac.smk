@@ -202,8 +202,8 @@ rule export_atac_embeddings:
         emb = "results_merged/atac/archr_write_data/emb_coords.tsv",
         umap = "results_merged/atac/archr_write_data/umap_coords.tsv"
     output:
-        emb = "export/atac/embeddings/harmony.tsv",
-        umap = "export/atac/embeddings/umap.tsv",
+        emb = "export/atac/embeddings/harmony.tsv.gz",
+        umap = "export/atac/embeddings/umap.tsv.gz"
     conda:
         "../envs/fetch.yaml"
     script:
@@ -216,7 +216,7 @@ rule export_atac_labels:
     input:
         "results_merged/atac/archr_label_data.tsv"
     output:
-        "export/atac/labels/cell_types.tsv"
+        "export/atac/labels/cell_types.tsv.gz"
     conda:
         "../envs/fetch.yaml"
     script:
@@ -244,7 +244,7 @@ rule export_atac_metadata:
         metadata = "results_merged/atac/archr_qc_parsed",
         final_data = "results_merged/atac/archr_label_data.tsv"
     output:
-        "export/atac/metadata.tsv",
+        "export/atac/metadata.tsv.gz",
     conda:
         "../envs/fetch.yaml"
     script:
@@ -257,17 +257,17 @@ rule export_atac_figures:
     input:
         "results_merged/atac/archr_label"
     output:
-        umap_labels = "export/atac/figures/umap_labels.pdf",
-        umap_samples = "export/atac/figures/umap_samples.pdf",
-        readme = "export/atac/figures/README.txt"
+        scratch = directory("results_merged/atac/export_figures"),
+        tarball = "export/atac/figures.tar.gz"
     params:
         readme = workflow.source_path("../resources/atac_figures_readme.txt")
     conda:
         "../envs/fetch.yaml"
     shell:
-        "cp {input}/Plots/umap_full_label.pdf {output.umap_labels}; "
-        "cp {input}/Plots/umap_harmony_datasets.pdf {output.umap_samples}; "
-        "cp {params.readme} {output.readme}"
+        "cp {input}/Plots/umap_full_label.pdf {output.scratch}/umap_labels.pdf; "
+        "cp {input}/Plots/umap_harmony_datasets.pdf {output.scratch}/umap_samples.pdf; "
+        "cp {params.readme} {output.scratch}/README.txt"
+        "tar -zcvf {output.tarball} {output.scratch}"
 
 rule export_atac_dataset_names:
     """

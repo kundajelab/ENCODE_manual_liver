@@ -1,3 +1,5 @@
+import gzip
+
 HEADER = """
 # cell_id: Cell ID used in integrated analysis
 # rna_dataset: ENCODE snRNA-Seq dataset ID
@@ -70,7 +72,7 @@ def main(metadata_paths, final_data_path, out_path):
     for i in final_ids:
         records[i]["pass_filter"] = True
 
-    with open(out_path, "w") as f:
+    with gzip.open(out_path, "wt") as f:
         f.write(HEADER)
         f.write(COLUMNS)
 

@@ -1,3 +1,5 @@
+import gzip
+
 HEADER_EMB = """
 # Unified cell embeddings integrated using Harmony
 # cell_id: Cell ID used in integrated analysis
@@ -11,7 +13,7 @@ HEADER_UMAP = """
 """
 
 def main(emb_in_path, umap_in_path, emb_out_path, umap_out_path):
-    with open(emb_in_path) as f, open(emb_out_path, "w") as fo:
+    with open(emb_in_path) as f, gzip.open(emb_out_path, "wt") as fo:
         fo.write(HEADER_EMB)
 
         h = f.readline()
@@ -20,7 +22,7 @@ def main(emb_in_path, umap_in_path, emb_out_path, umap_out_path):
         for line in f:
             fo.write(line)
 
-    with open(umap_in_path) as f, open(umap_out_path, "w") as fo:
+    with open(umap_in_path) as f, gzip.open(umap_out_path, "wt") as fo:
         fo.write(HEADER_UMAP)
 
         h = f.readline()
