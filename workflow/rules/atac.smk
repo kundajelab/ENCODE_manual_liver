@@ -194,7 +194,7 @@ rule archr_write_data:
     script:
         "../scripts/archr_write_data.R"
 
-rule export_rna_embeddings:
+rule export_atac_embeddings:
     """
     Export ATAC embeddings
     """
