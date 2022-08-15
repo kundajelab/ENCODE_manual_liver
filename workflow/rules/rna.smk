@@ -278,7 +278,7 @@ rule export_rna_figures:
     conda:
         "../envs/fetch.yaml"
     shell:
-        "mkdir -p {scratch}; "
+        "mkdir -p {output.scratch}; "
         "cp {input.umap_labels} {output.scratch}/umap_labels.pdf; "
         "cp {input.umap_samples} {output.scratch}/umap_samples.pdf; "
         "cp {params.readme} {output.scratch}/README.txt; "
