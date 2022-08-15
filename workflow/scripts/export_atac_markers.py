@@ -1,5 +1,7 @@
 import os
-import mygene as mg
+import mygene 
+
+mg = mygene.MyGeneInfo()
 
 HEADER = """
 # Marker genes for {label_name}
