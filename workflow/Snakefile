@@ -79,7 +79,7 @@ rule all:
         "export/atac/labels/cell_types.tsv.gz",
         "export/atac/markers",
         "export/atac/metadata.tsv.gz",
-        "export/atac/figures.tar.gz,
+        "export/atac/figures.tar.gz",
         "export/atac/datasets.txt",
         "results_merged/rna/seurat_name_rna/proj.rds",
         "export/rna/embeddings/harmony.tsv.gz",
