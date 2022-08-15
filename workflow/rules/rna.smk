@@ -278,9 +278,11 @@ rule export_rna_figures:
     conda:
         "../envs/fetch.yaml"
     shell:
-        "cp {input.umap_labels} {output.umap_labels}; "
-        "cp {input.umap_samples} {output.umap_samples}; "
-        "cp {params.readme} {output.readme}"
+        "mkdir -p {scratch}; "
+        "cp {input.umap_labels} {output.scratch}/umap_labels.pdf; "
+        "cp {input.umap_samples} {output.scratch}/umap_samples.pdf; "
+        "cp {params.readme} {output.scratch}/README.txt; "
+        "tar -zcvf {output.tarball} {output.scratch}"
 
 rule export_rna_dataset_names:
     """

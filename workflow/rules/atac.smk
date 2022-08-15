@@ -264,9 +264,10 @@ rule export_atac_figures:
     conda:
         "../envs/fetch.yaml"
     shell:
+        "mkdir -p {scratch}; "
         "cp {input}/Plots/umap_full_label.pdf {output.scratch}/umap_labels.pdf; "
         "cp {input}/Plots/umap_harmony_datasets.pdf {output.scratch}/umap_samples.pdf; "
-        "cp {params.readme} {output.scratch}/README.txt"
+        "cp {params.readme} {output.scratch}/README.txt; "
         "tar -zcvf {output.tarball} {output.scratch}"
 
 rule export_atac_dataset_names:
