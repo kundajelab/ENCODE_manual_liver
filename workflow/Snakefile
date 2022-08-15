@@ -74,9 +74,15 @@ rule all:
     """
     input: 
         "results_merged/atac/archr_label",
-        "results_merged/atac/archr_write_data/markers", ####
+        "export/atac/embeddings/harmony.tsv",
+        "export/atac/embeddings/umap.tsv",
         "export/atac/labels/cell_types.tsv",
+        "export/atac/markers",
         "export/atac/metadata.tsv",
+        "export/atac/figures/umap_labels.pdf",
+        "export/atac/figures/umap_samples.pdf",
+        "export/atac/figures/README.txt",
+        "export/atac/datasets.txt",
         "results_merged/rna/seurat_name_rna/proj.rds",
         "export/rna/embeddings/harmony.tsv",
         "export/rna/embeddings/umap.tsv",

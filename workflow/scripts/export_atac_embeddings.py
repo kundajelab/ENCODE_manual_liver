@@ -7,7 +7,7 @@ HEADER_EMB = """
 HEADER_UMAP = """
 # UMAP coordinates of each cell
 # cell_id: Cell ID used in integrated analysis
-# UMAP_1, UMAP_2: UMAP x and y coordinates, respectively
+# Harmony_ATAC#UMAP_Dimension_1, Harmony_ATAC#UMAP_Dimension_2: UMAP x and y coordinates, respectively
 """
 
 def main(emb_in_path, umap_in_path, emb_out_path, umap_out_path):

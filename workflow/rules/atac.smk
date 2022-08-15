@@ -194,6 +194,21 @@ rule archr_write_data:
     script:
         "../scripts/archr_write_data.R"
 
+rule export_rna_embeddings:
+    """
+    Export ATAC embeddings
+    """
+    input:
+        emb = "results_merged/atac/archr_write_data/emb_coords.tsv",
+        umap = "results_merged/atac/archr_write_data/umap_coords.tsv"
+    output:
+        emb = "export/atac/embeddings/harmony.tsv",
+        umap = "export/atac/embeddings/umap.tsv",
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/export_atac_embeddings.py"
+
 rule export_atac_labels:
     """
     Export ATAC cell types
@@ -206,6 +221,19 @@ rule export_atac_labels:
         "../envs/fetch.yaml"
     script:
         "../scripts/export_atac_labels.py"
+
+rule export_rna_markers:
+    """
+    Export ATAC markers
+    """
+    input:
+        "results_merged/atac/archr_write_data/markers"
+    output:
+        directory("export/atac/markers")
+    conda:
+        "../envs/fetch.yaml"
+    script:
+        "../scripts/export_atac_markers.py"
 
 rule export_atac_metadata:
     """
@@ -220,3 +248,35 @@ rule export_atac_metadata:
         "../envs/fetch.yaml"
     script:
         "../scripts/export_atac_metadata.py"
+
+rule export_atac_figures:
+    """
+    Export ATAC figures
+    """
+    input:
+        "results_merged/atac/archr_label"
+    output:
+        umap_labels = "export/rna/figures/umap_labels.pdf",
+        umap_samples = "export/rna/figures/umap_samples.pdf",
+        readme = "export/rna/figures/README.txt"
+    params:
+        readme = workflow.source_path("../resources/rna_figures_readme.txt")
+    conda:
+        "../envs/fetch.yaml"
+    shell:
+        "cp {input}/Plots/umap_full_label.pdf {output.umap_labels}; "
+        "cp {input}/Plots/umap_harmony_datasets.pdf {output.umap_samples}; "
+        "cp {params.readme} {output.readme}"
+
+rule export_atac_dataset_names:
+    """
+    Export ATAC dataset names used in analysis
+    """
+    output:
+        "export/atac/datasets.txt"
+    params:
+        datasets = [i.split("_")[-1].split("-")[0] for i in samples_atac+samples_multiome]
+    conda:
+        "../envs/fetch.yaml"
+    shell:
+        "echo {params.datasets} | tr ' ' '\\n' > {output}"
