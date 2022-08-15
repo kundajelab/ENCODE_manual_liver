@@ -10,7 +10,7 @@ FDR: p-value-derived FDR value for gene
 is_enriched: A binary (0/1) value indicating whether the given gene is enriched for the cell type (FDR < 0.1)
 """
 
-COLUMNS = "gene_id\tgene_name\tavg_log2FC\tavg_log2FC\tFDR\tis_enriched\n"
+COLUMNS = "gene_id\tgene_name\tavg_log2FC\tFDR\tis_enriched\n"
 
 def load_gtf(gtf_path):
     gtf_data = {}
