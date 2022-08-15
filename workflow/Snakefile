@@ -94,6 +94,19 @@ rule all:
         "export/rna/figures/README.txt",
         "export/rna/datasets.txt"
 
+rule download_gtf:
+    """
+    Download GTF data
+    """
+    output:
+        "results_merged/fetch/GRCh38.gtf.gz"
+    params:
+        url = config["gtf"]
+    conda:
+        "envs/fetch.yaml"
+    shell:
+        "curl --no-progress-meter -L {params.url} > {output}"
+
 def get_experiment_rna(w):
     x = w.sample.split("_")[0]
     return x.split("-")[0]

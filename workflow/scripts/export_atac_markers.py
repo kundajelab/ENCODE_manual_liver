@@ -1,7 +1,5 @@
 import os
-import mygene 
-
-mg = mygene.MyGeneInfo()
+import gzip
 
 HEADER = """
 # Marker genes for {label_name}
@@ -14,17 +12,29 @@ is_enriched: A binary (0/1) value indicating whether the given gene is enriched 
 
 COLUMNS = "gene_id\tgene_name\tavg_log2FC\tavg_log2FC\tFDR\tis_enriched\n"
 
-def query_gene(gene_name):
-    query = mg.querymany([gene_name], scopes='symbol', fields='ensembl.gene', species='human')[0]
-    if 'ensembl.gene' not in query:
-        return gene_name
-    if isinstance(query['ensembl.gene'], str): 
-        return query['ensembl.gene']
+def load_gtf(gtf_path):
+    gtf_data = {}
+    with gzip.open(gtf_path, "rt") as i:
+        for line in i:
+            if line.startswith("#"):
+                continue
 
-    return query['ensembl.gene'][0]
+            chrom, source, feature, start, end, score, strand, frame, attributes = line.rstrip('\n').split('\t')
+
+            if feature != "gene":
+                continue
+
+            attributes = [i.strip().split(" ") for i in attributes.rstrip(";").split(";")]
+            attributes = {k: v.strip("\"") for k, v in attributes}            
+            gene_id = attributes["gene_id"]
+            gene_name = attributes.get("gene_name", gene_id)
+
+            gtf_data[gene_name] = gene_id
+
+    return gtf_data
 
 
-def export_label(in_path, out_path, gene_cache, label_name):
+def export_label(in_path, out_path, gene_data, label_name):
     with open(in_path) as f, open(out_path, "w") as fo:
         fo.write(HEADER.format(label_name=label_name))
         fo.write(COLUMNS)
@@ -41,25 +51,26 @@ def export_label(in_path, out_path, gene_cache, label_name):
             avg_logFC = float(entries[lfc_ind])
             fdr = float(entries[fdr_ind])
 
-            gene_id = gene_cache.setdefault(gene_name, query_gene(gene_name))
+            gene_id = gene_data.get(gene_name, gene_name)
 
             is_enriched = int((fdr < 0.1) and (avg_logFC > 0))
             
             line = f"{gene_id}\t{gene_name}\t{avg_logFC}\t{fdr}\t{is_enriched}\n"
             fo.write(line)
 
-def main(markers_dir, out_dir):
+def main(markers_dir, out_dir, gtf_path):
     os.makedirs(out_dir, exist_ok=True)
     labels = [i for i in os.listdir(markers_dir) if not i.startswith(".")]
-    gene_cache = {}
+    gene_data = load_gtf(gtf_path)
     for l in labels:
         markers_path = os.path.join(markers_dir, l)
         out_path = os.path.join(out_dir, l)
         label_name = l.split(".")[0].replace("_", " ")
-        export_label(markers_path, out_path, gene_cache, label_name)
+        export_label(markers_path, out_path, gene_data, label_name)
 
-markers_dir, = snakemake.input
+markers_dir = snakemake.input["markers"]
+gtf_path = snakemake.input["gtf"]
 
 out_dir, = snakemake.output
 
-main(markers_dir, out_dir)
+main(markers_dir, out_dir, gtf_path)

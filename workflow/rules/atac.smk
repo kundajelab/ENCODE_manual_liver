@@ -227,7 +227,8 @@ rule export_atac_markers:
     Export ATAC markers
     """
     input:
-        "results_merged/atac/archr_write_data/markers"
+        markers = "results_merged/atac/archr_write_data/markers",
+        gtf = "results_merged/fetch/GRCh38.gtf.gz"
     output:
         directory("export/atac/markers")
     conda:
