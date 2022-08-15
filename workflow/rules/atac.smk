@@ -222,7 +222,7 @@ rule export_atac_labels:
     script:
         "../scripts/export_atac_labels.py"
 
-rule export_rna_markers:
+rule export_atac_markers:
     """
     Export ATAC markers
     """
