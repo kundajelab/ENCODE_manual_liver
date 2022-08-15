@@ -15,7 +15,7 @@ is_enriched: A binary (0/1) value indicating whether the given gene is enriched 
 COLUMNS = "gene_id\tgene_name\tavg_log2FC\tavg_log2FC\tFDR\tis_enriched\n"
 
 def query_gene(gene_name):
-    query, = mg.querymany([gene_name], scopes='symbol', fields='ensembl.gene', species='human')
+    query = mg.querymany([gene_name], scopes='symbol', fields='ensembl.gene', species='human')[0]
     if 'ensembl.gene' not in query:
         return gene_name
     if isinstance(query['ensembl.gene'], str): 
