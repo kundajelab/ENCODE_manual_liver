@@ -256,11 +256,11 @@ rule export_atac_figures:
     input:
         "results_merged/atac/archr_label"
     output:
-        umap_labels = "export/rna/figures/umap_labels.pdf",
-        umap_samples = "export/rna/figures/umap_samples.pdf",
-        readme = "export/rna/figures/README.txt"
+        umap_labels = "export/atac/figures/umap_labels.pdf",
+        umap_samples = "export/atac/figures/umap_samples.pdf",
+        readme = "export/atac/figures/README.txt"
     params:
-        readme = workflow.source_path("../resources/rna_figures_readme.txt")
+        readme = workflow.source_path("../resources/atac_figures_readme.txt")
     conda:
         "../envs/fetch.yaml"
     shell:
