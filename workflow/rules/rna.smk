@@ -255,7 +255,10 @@ rule export_rna_metadata:
     """
     input:
         metadata = expand("results/{sample}/rna/seurat_build_rna/metadata.tsv", sample=samples_rna+samples_multiome),
-        final_data = "results_merged/rna/seurat_name_rna/metadata.tsv"
+        metadata_atac = "results_merged/atac/archr_qc_parsed",
+        final_data = "results_merged/rna/seurat_name_rna/metadata.tsv",
+        wl_atac = "whitelists/atac.txt",
+        wl_rna = "whitelists/rna.txt"
     output:
         "export/rna/metadata.tsv.gz",
     conda:

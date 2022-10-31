@@ -242,7 +242,10 @@ rule export_atac_metadata:
     """
     input:
         metadata = "results_merged/atac/archr_qc_parsed",
-        final_data = "results_merged/atac/archr_label_data.tsv"
+        metadata_rna = expand("results/{sample}/rna/seurat_build_rna/metadata.tsv", sample=samples_rna+samples_multiome),
+        final_data = "results_merged/atac/archr_label_data.tsv",
+        wl_atac = "whitelists/atac.txt",
+        wl_rna = "whitelists/rna.txt"
     output:
         "export/atac/metadata.tsv.gz",
     conda:
