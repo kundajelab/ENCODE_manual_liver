@@ -120,7 +120,7 @@ def main(wl_atac_path, wl_rna_path, metadata_paths, metadata_atac_dir, final_dat
 
     records = {}
     for i in metadata_paths:
-        records |= load_records(i)
+        records |= load_records(i, atac_bcs, bc_map)
 
     final_ids = load_final_data(final_data_path)
     for i in final_ids:
@@ -133,7 +133,7 @@ def main(wl_atac_path, wl_rna_path, metadata_paths, metadata_atac_dir, final_dat
         for cell_id, r in records.items():
             line = f"{cell_id}\t{r['dataset']}\t{r['barcode']}\{r['dataset_atac']}\{r['barcode_atac']}\t{r['umi_count']}\tNA\t{r['frac_mito']}\t{r['frac_ribo']}\tNA\t{int(r['pass_filter'])}\n"
             f.write(line)
-            
+
 wl_atac_path = snakemake.input["wl_atac"]
 wl_rna_path = snakemake.input["wl_rna"]
 metadata_paths = snakemake.input["metadata"]

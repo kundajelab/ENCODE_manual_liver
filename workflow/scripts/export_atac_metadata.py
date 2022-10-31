@@ -117,7 +117,7 @@ def main(wl_atac_path, wl_rna_path, metadata_dir, metadata_rna_paths, final_data
     metadata_paths = [os.path.join(metadata_dir, i, "metadata.tsv") for i in os.listdir(metadata_dir) if not i.startswith(".")]
     records = {}
     for i in metadata_paths:
-        records |= load_records(i)
+        records |= load_records(i, rna_bcs, bc_map)
 
     final_ids = load_final_data(final_data_path)
     for i in final_ids:
