@@ -46,7 +46,8 @@ def load_atac_bcs(metadata_atac_path):
 
             cell_id = entries[cell_id_ind]
             dataset, barcode = cell_id.split("#")
-            atac_bcs.setdefault(dataset, set()).add(barcode)
+            dataset_parsed_atac = dataset.split("_")[-1].split("-")[0]
+            atac_bcs.setdefault(dataset_parsed_atac, set()).add(barcode)
 
     return atac_bcs
 

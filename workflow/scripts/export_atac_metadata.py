@@ -50,8 +50,9 @@ def load_rna_bcs(metadata_rna_path):
 
             dataset = entries[dataset_ind]
             barcode = entries[barcode_ind]
+            dataset_parsed_rna = dataset.split("_")[0].split("-")[0]
 
-            rna_bcs.setdefault(dataset, set()).add(barcode)
+            rna_bcs.setdefault(dataset_parsed_rna, set()).add(barcode)
     
     return rna_bcs
 
