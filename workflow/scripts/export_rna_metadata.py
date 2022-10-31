@@ -131,7 +131,7 @@ def main(wl_atac_path, wl_rna_path, metadata_paths, metadata_atac_dir, final_dat
         f.write(COLUMNS)
 
         for cell_id, r in records.items():
-            line = f"{cell_id}\t{r['dataset']}\t{r['barcode']}\{r['dataset_atac']}\{r['barcode_atac']}\t{r['umi_count']}\tNA\t{r['frac_mito']}\t{r['frac_ribo']}\tNA\t{int(r['pass_filter'])}\n"
+            line = f"{cell_id}\t{r['dataset']}\t{r['barcode']}\t{r['dataset_atac']}\t{r['barcode_atac']}\t{r['umi_count']}\tNA\t{r['frac_mito']}\t{r['frac_ribo']}\tNA\t{int(r['pass_filter'])}\n"
             f.write(line)
 
 wl_atac_path = snakemake.input["wl_atac"]
