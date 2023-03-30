@@ -44,6 +44,7 @@ build_archr_project <- function(params, input_paths, output_paths, threads, log_
         minFrags = min_frags,
         minTSS = min_tss_enr,
         addTileMat = TRUE,
+        TileMatParams = list(tileSize = 5000, binarize = FALSE),
         addGeneScoreMat = TRUE,
         force = TRUE,
         subThreading = FALSE, # required for no file locking
