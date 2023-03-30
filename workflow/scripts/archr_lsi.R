@@ -113,7 +113,7 @@ proj <- addIterativeLSI(
     ArchRProj = proj,
     useMatrix = "TileMatrix", 
     name = "LSI_ATAC", 
-    # iterations = 4, 
+    iterations = 1, 
     # clusterParams = list( 
     #     resolution = c(0.2,0.2,0.6,0.8), 
     #     sampleCells = 10000, 
