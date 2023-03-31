@@ -114,13 +114,14 @@ proj <- addIterativeLSI(
     useMatrix = "TileMatrix", 
     name = "LSI_ATAC", 
     iterations = 1, 
+    scaleDims = FALSE,
     # clusterParams = list( 
     #     resolution = c(0.2,0.2,0.6,0.8), 
     #     sampleCells = 10000, 
     #     n.start = 10
     # ), 
     # varFeatures = 25000,
-    # dimsToUse = 1:30,
+    dimsToUse = 2:31,
     logFile = log_paths[["lsi_atac"]]
 )
 print(proj@reducedDims[["LSI_ATAC"]]$corToDepth) ####
