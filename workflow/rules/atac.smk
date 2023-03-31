@@ -117,7 +117,8 @@ rule archr_linkage:
         project_in = "results_merged/atac/archr_clustered",
         seurat_data = "reference/seurat_build_reference_log1p/proj.rds"
     output:
-        project_out = directory("results_merged/atac/archr_linkage")
+        project_out = directory("results_merged/atac/archr_linkage"),
+        labels = "results_merged/atac/archr_label_data.tsv"
     params:
         seed = config["archr_seed"]
     log:
@@ -133,29 +134,29 @@ rule archr_linkage:
     script:
         "../scripts/archr_linkage.R"
 
-rule archr_label:
-    """
-    ArchR cluster labeling
-    """
-    input:
-        project_in = "results_merged/atac/archr_linkage",
-        label_data = "results_merged/atac/labels_import.tsv"
-    output:
-        project_out = directory("results_merged/atac/archr_label"),
-        labels = "results_merged/atac/archr_label_data.tsv"
-    params:
-        seed = config["archr_seed"]
-    log:
-        console = "logs/merged/atac/archr_label/console.log",
-        move = "logs/merged/atac/archr_label/move.log",
-        umap_plot = "logs/merged/atac/archr_label/umap_plot.log",
-        save = "logs/merged/atac/archr_label/save.log"
-    threads:
-        max_threads
-    conda:
-        "../envs/archr.yaml"
-    script:
-        "../scripts/archr_label.R"
+# rule archr_label:
+#     """
+#     ArchR cluster labeling
+#     """
+#     input:
+#         project_in = "results_merged/atac/archr_linkage",
+#         label_data = "results_merged/atac/labels_import.tsv"
+#     output:
+#         project_out = directory("results_merged/atac/archr_label"),
+#         labels = "results_merged/atac/archr_label_data.tsv"
+#     params:
+#         seed = config["archr_seed"]
+#     log:
+#         console = "logs/merged/atac/archr_label/console.log",
+#         move = "logs/merged/atac/archr_label/move.log",
+#         umap_plot = "logs/merged/atac/archr_label/umap_plot.log",
+#         save = "logs/merged/atac/archr_label/save.log"
+#     threads:
+#         max_threads
+#     conda:
+#         "../envs/archr.yaml"
+#     script:
+#         "../scripts/archr_label.R"
 
 rule archr_write_qc:
     """
@@ -177,7 +178,7 @@ rule archr_write_data:
     ArchR write cell data
     """
     input:
-        project_in = "results_merged/atac/archr_label"
+        project_in = "results_merged/atac/archr_linkage"
     output:
         markers = directory("results_merged/atac/archr_write_data/markers"),
         emb_coords = "results_merged/atac/archr_write_data/emb_coords.tsv",
@@ -268,7 +269,7 @@ rule export_atac_figures:
         "../envs/fetch.yaml"
     shell:
         "mkdir -p {output.scratch}; "
-        "cp {input}/Plots/umap_full_label.pdf {output.scratch}/umap_labels.pdf; "
+        "cp {input}/Plots/umap_labels_link.pdf {output.scratch}/umap_labels.pdf; "
         "cp {input}/Plots/umap_harmony_datasets.pdf {output.scratch}/umap_samples.pdf; "
         "cp {params.readme} {output.scratch}/README.txt; "
         "tar -zcvf {output.tarball} {output.scratch}"

@@ -97,7 +97,11 @@ cM <- cbind(cM, Unknown = 0.01)
 print(cM) ####
 labelOld <- rownames(cM)
 labelNew <- colnames(cM)[apply(cM, 1, which.max)]
-proj$cell_labels_link <- mapLabels(proj$Clusters_ATAC, newLabels = labelNew, oldLabels = labelOld)
+proj$cell_labels <- mapLabels(proj$Clusters_ATAC, newLabels = labelNew, oldLabels = labelOld)
+
+label_data <- getCellColData(ArchRProj = proj)
+print(label_data) ####
+write.table(label_data, output_paths[["labels"]], quote = FALSE, sep = '\t', col.names = NA)
 
 p <- pheatmap::pheatmap(
     # mat = cM[rowSums(cM)>0,], 
