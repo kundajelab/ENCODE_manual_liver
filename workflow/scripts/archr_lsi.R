@@ -123,7 +123,7 @@ proj <- addIterativeLSI(
     # dimsToUse = 1:30,
     logFile = log_paths[["lsi_atac"]]
 )
-print(ArchRProj@reducedDims[["LSI_ATAC"]]$corToDepth) ####
+print(proj@reducedDims[["LSI_ATAC"]]$corToDepth) ####
 
 ##########
 
