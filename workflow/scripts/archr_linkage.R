@@ -115,7 +115,7 @@ plotPDF(p, name = "seurat_label_linkage_cm.pdf", ArchRProj = proj, addDOC = FALS
 p1 <- plotEmbedding(
     ArchRProj = proj, 
     colorBy = "cellColData", 
-    name = "cell_labels_link", 
+    name = "cell_labels", 
     embedding = "UMAP_Harmony",
     logFile = log_paths[["umap_plot"]]
 )
