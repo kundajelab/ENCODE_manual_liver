@@ -3,7 +3,7 @@ import gzip
 HEADER_EMB = """
 # Unified cell embeddings integrated using Harmony
 # cell_id: Cell ID used in integrated analysis
-# LSI1, LSI2, … LSI30: Columns of a 30-dimensional Harmony embedding vector
+# LSI2, LSI2, … LSI31: Columns of a 30-dimensional Harmony embedding vector
 """
 
 HEADER_UMAP = """
